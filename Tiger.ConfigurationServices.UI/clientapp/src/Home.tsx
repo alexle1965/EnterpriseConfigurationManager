@@ -8,13 +8,13 @@ export class Home extends React.Component<{}, {}> {
 
         const centerContent = (
             <div className="text-center">
-                <h1>Home.tsx</h1>
+                <h1>Home</h1>
                 <div>
                     <Loading />
                 </div>
             </div>
         );
 
-        return <PageContainer leftContent={leftContent} centerContent={centerContent} />;
+        return <PageContainer border="on" leftContent={leftContent} centerContent={centerContent} />;
     }
 }

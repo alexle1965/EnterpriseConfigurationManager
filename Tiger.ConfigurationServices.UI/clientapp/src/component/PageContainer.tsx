@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 export interface IProps {
-    topContent?: React.ReactNode;
+    headerContent?: React.ReactNode;
     leftContent?: React.ReactNode;
     centerContent?: React.ReactNode;
     rightContent?: React.ReactNode;
-    bottomContent?: React.ReactNode;
-    border?: boolean;
+    footerContent?: React.ReactNode;
+    border?: string;
 }
 
 export interface IState {}
@@ -18,29 +18,34 @@ class PageContainer extends React.Component<IProps, IState> {
         centerContent: undefined,
         rightContent: undefined,
         bottomContent: undefined,
-        border: undefined
+        border: 'off'
     };
 
     public render(): JSX.Element {
+        console.log('border: ', this.props.border);
         return (
             <div className="container-fluid">
-                {this.props.topContent && (
-                    <div className="row border-black">
-                        <div className="col">{this.props.topContent}</div>
+                {this.props.headerContent && (
+                    <div className={`row ${this.props.border === 'on' ? 'border-black' : ''}`}>
+                        <div className="col">{this.props.headerContent}</div>
                     </div>
                 )}
-                <div className="row border-black" style={{ minHeight: 700 }}>
-                    {this.props.leftContent && <div className="col-2 border-red">{this.props.leftContent}</div>}
+                <div className={`row ${this.props.border === 'on' ? 'border-red' : ''}`} style={{ minHeight: 700 }}>
+                    {this.props.leftContent && (
+                        <div className={`col-2 ${this.props.border === 'on' ? 'border-red' : ''}`}>{this.props.leftContent}</div>
+                    )}
                     {this.props.centerContent && (
-                        <div className="col">
+                        <div className={`col ${this.props.border === 'on' ? 'border-red' : ''}`}>
                             <div className="text-center">{this.props.centerContent}</div>
                         </div>
                     )}
-                    {this.props.rightContent && <div className="col-2 border-red">{this.props.rightContent}</div>}
+                    {this.props.rightContent && (
+                        <div className={`col-2 ${this.props.border === 'on' ? 'border-red' : ''}`}>{this.props.rightContent}</div>
+                    )}
                 </div>
-                {this.props.bottomContent && (
-                    <div className="row border-black">
-                        <div className="col-xs-1-12">{this.props.bottomContent}</div>
+                {this.props.footerContent && (
+                    <div className={`row ${this.props.border === 'on' ? 'border-black' : ''}`}>
+                        <div className="col">{this.props.footerContent}</div>
                     </div>
                 )}
             </div>
