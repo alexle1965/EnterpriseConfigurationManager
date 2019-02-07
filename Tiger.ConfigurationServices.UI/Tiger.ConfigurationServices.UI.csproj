@@ -23,8 +23,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="clientapp\src\navigation\HeaderNav.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\component\" />
+    <Folder Include="ClientApp\src\models\" />
+    <Folder Include="ClientApp\src\css\" />
+    <Folder Include="ClientApp\src\shared\" />
     <Folder Include="Models\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="clientapp\src\navigation\HeaderNav.tsx" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
