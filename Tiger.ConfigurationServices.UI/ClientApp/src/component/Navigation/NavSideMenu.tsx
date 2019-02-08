@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Home } from '../../Home';
 import { HistoryContainer } from '../History/HistoryContainer';
 import { ManageConfigContainer } from '../ManageConfig/ManageConfigContainer';
+import { ManageServerContainer } from '../ManageServer/ManageServerContainer';
 
 export class NavSideMenu extends React.Component<{}, {}> {
     public render(): JSX.Element {
@@ -32,14 +33,14 @@ export class NavSideMenu extends React.Component<{}, {}> {
                             </li>
 
                             <li className="nav-item">
-                                <Link className="nav-link" to={'/'}>
+                                <Link className="nav-link" to={'/ManageServer'}>
                                     <FontAwesomeIcon icon="server" className="mr-2" style={{ color: '#4682B4' }} />
                                     Manage Servers
                                 </Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to={'/'}>
-                                    Menu Item 5
+                                    Future Menu Item
                                 </Link>
                             </li>
                         </ul>
@@ -48,6 +49,7 @@ export class NavSideMenu extends React.Component<{}, {}> {
                         <Route exact path="/" component={Home} />
                         <Route exact path="/History" component={HistoryContainer} />
                         <Route exact path="/ManageConfig" component={ManageConfigContainer} />
+                        <Route exact path="/ManageServer" component={ManageServerContainer} />
                     </div>
                 </div>
             </div>
