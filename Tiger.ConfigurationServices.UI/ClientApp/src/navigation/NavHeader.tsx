@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import curo_logo from '../navigation/curo_logo.png';
 
-export class HeaderNav extends React.Component<{}, {}> {
+export class NavHeader extends React.Component<{}, {}> {
     public render(): JSX.Element {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

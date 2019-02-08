@@ -22,8 +22,6 @@
     z-index: 1;
 }
 
-
-
 @media (min-width: 768px) {
     /* On small screens, convert the nav menu to a vertical sidebar */
     .main-nav {
@@ -71,6 +69,38 @@
 }
 
 /*******************************************************************************************************
+    Common CSS
+********************************************************************************************************/
+
+/* text color */
+.white-text {
+    color: #ffffff;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+/* border */
+.border-red {
+    border: 1px solid red;
+}
+
+.border-blue {
+    border: 1px solid blue;
+}
+
+.border-black {
+    border: 1px solid black;
+}
+
+/* table header */
+.table-header {
+    background-color: #1b4f72;
+    color: #ffffff;
+}
+
+/*******************************************************************************************************
     Curo Specific CSS
 ********************************************************************************************************/
 
@@ -98,32 +128,4 @@
 
 .train-background {
     background-color: #c6cff4;
-}
-
-/*******************************************************************************************************
-    Curo Common CSS
-********************************************************************************************************/
-/* Font weight */
-
-.bold-text {
-    font-weight: bold;
-}
-
-/* border */
-.border-red {
-    border: 1px solid red;
-}
-
-.border-blue {
-    border: 1px solid blue;
-}
-
-.border-black {
-    border: 1px solid black;
-}
-
-/* table header */
-.table-header {
-    background-color: #1b4f72;
-    color: #ffffff;
 }

@@ -30,10 +30,11 @@
 
   <ItemGroup>
     <None Remove="clientapp\src\component\KeyValuePair.ts" />
-    <None Remove="clientapp\src\navigation\HeaderNav.tsx" />
+    <None Remove="clientapp\src\navigation\NavHeader.tsx" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\History\" />
     <Folder Include="ClientApp\src\models\" />
     <Folder Include="ClientApp\src\css\" />
     <Folder Include="ClientApp\src\shared\" />
@@ -42,7 +43,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="clientapp\src\component\KeyValuePair.ts" />
-    <TypeScriptCompile Include="clientapp\src\navigation\HeaderNav.tsx" />
+    <TypeScriptCompile Include="clientapp\src\navigation\NavHeader.tsx" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

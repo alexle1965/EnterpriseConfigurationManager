@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { HeaderNav } from '../navigation/HeaderNav';
+import curo_logo from '../navigation/curo_logo.png';
+import { NavSideMenu } from '../navigation/NavSideMenu';
 
 export interface LayoutProps {
     children?: React.ReactNode;
@@ -8,14 +9,17 @@ export interface LayoutProps {
 export class Layout extends React.Component<LayoutProps, {}> {
     public render() {
         return (
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-sm-12">
-                        <HeaderNav />
-                        <div>{this.props.children}</div>
-                    </div>
+            <>
+                <div>
+                    <nav className="navbar navbar-dark bg-dark d-flex justify-space-between">
+                        <a className="navbar-brand" href="http://www.curo.com">
+                            <img src={curo_logo} />
+                        </a>
+                    </nav>
                 </div>
-            </div>
+
+                <NavSideMenu />
+            </>
         );
     }
 }

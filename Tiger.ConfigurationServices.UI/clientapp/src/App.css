@@ -33,3 +33,33 @@
         transform: rotate(360deg);
     }
 }
+
+/*******************************************************************************************************
+    Curo Specific CSS
+********************************************************************************************************/
+
+/* CURO CSS */
+.curo-color {
+    color: #b2c629;
+}
+
+/* environment background */
+.dev-background {
+    background-color: #fbeee6;
+}
+
+.pre-background {
+    background-color: #e9f7ef;
+}
+
+.prodqa-background {
+    background-color: #f4ecf7;
+}
+
+.prod-background {
+    background-color: #f1bfbf;
+}
+
+.train-background {
+    background-color: #c6cff4;
+}
