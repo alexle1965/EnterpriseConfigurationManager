@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Layout } from './navigation/Layout';
+
 import { Home } from './Home';
 import './App.css';
 import { Route } from 'react-router';
+import { Layout } from './component/Navigation/Layout';
 
 class App extends Component {
     public render() {

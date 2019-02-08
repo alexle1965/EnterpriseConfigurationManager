@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, Route } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Home } from '../Home';
+import { Home } from '../../Home';
 import { HistoryContainer } from '../History/HistoryContainer';
 import { ManageConfigContainer } from '../ManageConfig/ManageConfigContainer';
 

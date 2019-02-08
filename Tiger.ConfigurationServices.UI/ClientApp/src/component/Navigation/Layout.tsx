@@ -1,6 +1,6 @@
 import * as React from 'react';
-import curo_logo from '../navigation/curo_logo.png';
-import { NavSideMenu } from '../navigation/NavSideMenu';
+import curo_logo from '../Navigation/curo_logo.png';
+import { NavSideMenu } from '../Navigation/NavSideMenu';
 
 export interface LayoutProps {
     children?: React.ReactNode;
