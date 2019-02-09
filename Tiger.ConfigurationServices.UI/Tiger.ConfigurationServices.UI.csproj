@@ -19,6 +19,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="Tiger.Infrastructure" Version="19.3.6" />
   </ItemGroup>
 
@@ -39,7 +40,6 @@
     <Folder Include="ClientApp\src\models\" />
     <Folder Include="ClientApp\src\css\" />
     <Folder Include="ClientApp\src\shared\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
