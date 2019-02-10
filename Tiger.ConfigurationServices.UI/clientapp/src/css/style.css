@@ -1,6 +1,6 @@
-﻿/*******************************************************************************************************
+﻿/***************************************************************************************
     Menu Header CSS
-********************************************************************************************************/
+***************************************************************************************/
 .main-nav li .glyphicon {
     margin-right: 10px;
 }
@@ -29,48 +29,56 @@
         width: calc(25% - 20px);
     }
 
-        .main-nav .navbar {
-            border-radius: 0px;
-            border-width: 0px;
-            height: 100%;
-        }
+    .main-nav .navbar {
+        border-radius: 0px;
+        border-width: 0px;
+        height: 100%;
+    }
 
-        .main-nav .navbar-header {
-            float: none;
-        }
+    .main-nav .navbar-header {
+        float: none;
+    }
 
-        .main-nav .navbar-collapse {
-            border-top: 1px solid #444;
-            padding: 0px;
-        }
+    .main-nav .navbar-collapse {
+        border-top: 1px solid #444;
+        padding: 0px;
+    }
 
-        .main-nav .navbar ul {
-            float: none;
-        }
+    .main-nav .navbar ul {
+        float: none;
+    }
 
-        .main-nav .navbar li {
-            float: none;
-            font-size: 15px;
-            margin: 6px;
-        }
+    .main-nav .navbar li {
+        float: none;
+        font-size: 15px;
+        margin: 6px;
+    }
 
-            .main-nav .navbar li a {
-                padding: 10px 16px;
-                border-radius: 4px;
-            }
+    .main-nav .navbar li a {
+        padding: 10px 16px;
+        border-radius: 4px;
+    }
 
-        .main-nav .navbar a {
-            /* If a menu item's text is too long, truncate it */
-            width: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+    .main-nav .navbar a {
+        /* If a menu item's text is too long, truncate it */
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
-/*******************************************************************************************************
+/***************************************************************************************
+   Side Menu CSS
+***************************************************************************************/
+.nav-link-active {
+    background-color: #dcdcdc;
+    color: crimson;
+}
+
+/***************************************************************************************
     Common CSS
-********************************************************************************************************/
+***************************************************************************************/
 
 /* text color */
 .white-text {
@@ -100,9 +108,9 @@
     color: #ffffff;
 }
 
-/*******************************************************************************************************
+/***************************************************************************************
     Curo Specific CSS
-********************************************************************************************************/
+***************************************************************************************/
 
 /* CURO CSS */
 .curo-color {
@@ -129,3 +137,93 @@
 .train-background {
     background-color: #c6cff4;
 }
+/* **************************************************************
+    Begin Edit on or off checkbox in Manage Configuration Setting 
+***************************************************************/
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 90px;
+    height: 34px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ca2222;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #2ab934;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(55px);
+    -ms-transform: translateX(55px);
+    transform: translateX(55px);
+}
+
+/*------ ADDED CSS ---------*/
+.on {
+    display: none;
+}
+
+.on,
+.off {
+    color: white;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    text-align: right;
+    /* font-size: 8px;
+    font-family: Verdana, sans-serif; */
+}
+
+input:checked + .slider .on {
+    display: block;
+}
+
+input:checked + .slider .off {
+    display: none;
+}
+
+/*--------- END --------*/
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+/* **************************************************************
+    End Edit on or off checkbox in Manage Configuration Setting 
+***************************************************************/

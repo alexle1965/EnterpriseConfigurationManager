@@ -22,11 +22,11 @@ interface IProps {
     onSelect: (selectedValue: string) => void;
 }
 
-interface IState {}
+interface IState { }
 
 export class SelectDropdown extends React.Component<IProps, IState> {
     static defaultProps = {
-        title: 'Search...',
+        title: 'Search or Type',
         selectedValue: ''
     };
 
