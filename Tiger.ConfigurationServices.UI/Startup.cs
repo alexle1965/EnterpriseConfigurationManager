@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
+using Tiger.ConfigurationServices.UI.Models;
+using Tiger.ConfigurationServices.UI.Services;
 
 namespace Tiger.ConfigurationServices.UI
 {
@@ -20,6 +23,12 @@ namespace Tiger.ConfigurationServices.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // register database as a service to make it available to MVC controllers
+            services.AddDbContext<MaintContext>(optionsBuilder => optionsBuilder.UseSqlServer("Data Source=srcmaint;Initial Catalog=Maint;Integrated Security=False;User Id=Maint;Password=Yg98pwHw-u0qxl;MultipleActiveResultSets=True"));
+
+            // register new service here
+            services.AddTransient<ManageConfigService>();
+
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(options =>

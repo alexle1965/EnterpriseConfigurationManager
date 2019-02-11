@@ -5,15 +5,18 @@ import { KeyValuePair } from './KeyValuePair';
 
 // Using React-Select to populate the Config & Setting Dropdown
 //
+// **************************************************************
 // Warning:React-Select is not flexible when it comes to styling
+// **************************************************************
 //
 // Expected options format:
-// const options = [
-//     { value: 'KEY of KeyValuePair', label: 'VALUE of KeyValuePair' }
-//     Example:
+// const options = [ {value, label}]
+//
+//     Example of using Key Value Pair (key,value):
+//     { value: 'KEY', label: 'VALUE ' }
 //     { value: 'CAN_DEV', label: 'CAN_DEV' },
+//     { value: 1, 'SRC_PROD'},
 //     { value: '105', label: 'ACHSEND' },
-//   ]
 
 interface IProps {
     optionList: KeyValuePair<string, string>[];
@@ -22,15 +25,15 @@ interface IProps {
     onSelect: (selectedValue: string) => void;
 }
 
-interface IState { }
+interface IState {}
 
 export class SelectDropdown extends React.Component<IProps, IState> {
     static defaultProps = {
-        title: 'Search or Type',
+        title: 'Select or Type',
         selectedValue: ''
     };
 
-    public render() {
+    public render(): JSX.Element {
         // React-Select dropdown "VALUE" is expecting the type of ValueType<any>.  However, the "selectedValue" is passed in as "string | undefined"
         const _value = this.props.selectedValue !== '' ? { value: this.props.selectedValue, label: this.props.selectedValue } : null;
 

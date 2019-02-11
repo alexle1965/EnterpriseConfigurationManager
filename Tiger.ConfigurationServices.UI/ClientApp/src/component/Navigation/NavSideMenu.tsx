@@ -3,8 +3,8 @@ import { Route, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Home } from '../../Home';
 import { HistoryContainer } from '../History/HistoryContainer';
-import { ManageConfigContainer } from '../ManageConfig/ManageConfigContainer';
 import { ManageServerContainer } from '../ManageServer/ManageServerContainer';
+import { ManageConfigSection } from '../ManageConfig/ManageConfigSection';
 
 export class NavSideMenu extends React.Component<{}, {}> {
     public render(): JSX.Element {
@@ -21,13 +21,13 @@ export class NavSideMenu extends React.Component<{}, {}> {
                             </li>
                             <li className="nav-item" title="View Edit History">
                                 <NavLink className="nav-link" to={'/History'} activeClassName="nav-link-active">
-                                    <FontAwesomeIcon icon="history" className="mr-2" style={{ color: '#7B68EE' }} />
+                                    <FontAwesomeIcon icon="history" className="mr-2" style={{ color: '#800000' }} />
                                     View History
                                 </NavLink>
                             </li>
                             <li className="nav-item" title="Edit Config Value by Config or Setting">
                                 <NavLink className="nav-link" to={'/ManageConfig'} activeClassName="nav-link-active">
-                                    <FontAwesomeIcon icon="tools" className="mr-2" style={{ color: '#FF5733' }} />
+                                    <FontAwesomeIcon icon="tools" className="mr-2" style={{ color: '#1E90FF' }} />
                                     Manage Configuration
                                 </NavLink>
                             </li>
@@ -43,7 +43,7 @@ export class NavSideMenu extends React.Component<{}, {}> {
                     <div className="col">
                         <Route exact path="/" component={Home} />
                         <Route exact path="/History" component={HistoryContainer} />
-                        <Route exact path="/ManageConfig" component={ManageConfigContainer} />
+                        <Route exact path="/ManageConfig" component={ManageConfigSection} />
                         <Route exact path="/ManageServer" component={ManageServerContainer} />
                     </div>
                 </div>

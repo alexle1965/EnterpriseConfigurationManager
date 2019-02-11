@@ -1,9 +1,12 @@
 import * as React from 'react';
 
-import { ManageConfigSection } from './ManageConfigSection';
-
 export class ManageConfigContainer extends React.Component<{}, {}> {
     public render(): JSX.Element {
-        return <ManageConfigSection />;
+        return (
+            <>
+
+                <div> Manager Container </div>
+            </>
+        );
     } // render
 } // export

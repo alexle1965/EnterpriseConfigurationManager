@@ -10,7 +10,7 @@ interface IState {
     currentOption: string;
 }
 
-export class Options extends React.Component<IProps, IState> {
+export class ConfigOptions extends React.Component<IProps, IState> {
     static defaultProps = {
         option: ViewBy.Config
     };
