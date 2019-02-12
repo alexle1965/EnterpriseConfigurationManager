@@ -5,8 +5,10 @@ import { ViewBy } from '../../models/Enum';
 import { KeyValuePair } from '../Common/KeyValuePair';
 import { ManageConfigClient } from './ManageConfigClient';
 import { ConfigSelections } from '../Common/ConfigSelections';
+import { IConfigValueResult } from '../../models/ConfigValueResultModel';
+import { ManageConfigResult } from './ManageConfigResult';
 
-interface IProps { }
+interface IProps {}
 
 interface IState {
     uniqueId: number;
@@ -16,6 +18,7 @@ interface IState {
     configList: KeyValuePair<any, string>[];
     settingList: KeyValuePair<any, string>[];
     options: KeyValuePair<any, string>[];
+    configValueResult: IConfigValueResult[];
 }
 
 const manageConfigClient = new ManageConfigClient();
@@ -30,15 +33,15 @@ export class ManageConfigSection extends React.Component<IProps, IState> {
         selectedValue: '',
         configList: [],
         settingList: [],
-        options: []
+        options: [],
+        configValueResult: []
     };
 
     public render(): JSX.Element {
+        // const data = this.state.configValueResult;
+
         return (
             <>
-                <div>
-                    <h5>Manage Configuration Section</h5>
-                </div>
                 <div className="container-fluid">
                     <div className="row my-2">
                         <div className="col-3 text-left">
@@ -56,16 +59,26 @@ export class ManageConfigSection extends React.Component<IProps, IState> {
                             <EditButton editMode={this.toggleEdit} />
                         </div>
                     </div>
-
-                    <div className="row border-red">
-                        <div className="col  border-black">configResult</div>
+                </div>
+                <div className="row mt-2">
+                    <div className="col-12 mr-2" style={{ maxHeight: 720 }}>
+                        <div className="mr-2 my-2 border-blue">
+                            {this.state.configValueResult && <ManageConfigResult data={this.state.configValueResult} />}
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <h6>ManageConfigSection.tsx: Edit Mode is: {this.state.checked ? 'on' : 'off'}</h6>
-                    <h6>ManageConfigSection.tsx: View by: {this.state.viewBy}</h6>
-                    <h6>ManageConfigSection.tsx: Selected value: {this.state.selectedValue}</h6>
+                <div className="">
+                    {this.state.configValueResult && (
+                        <label className="text-left small bold-text">Record count: {this.state.configValueResult.length}</label>
+                    )}
                 </div>
+                {/* <div>
+                    <h2>Debug:</h2>
+                    <h6>Edit Mode is: {this.state.checked ? 'on' : 'off'}</h6>
+                    <h6>View by: {this.state.viewBy}</h6>
+                    <h6>Selected value: {this.state.selectedValue}</h6>
+                    <h6>Config Value Results: {this.state.configValueResult.length}</h6>
+                </div> */}
             </>
         );
     } // render
@@ -98,13 +111,35 @@ export class ManageConfigSection extends React.Component<IProps, IState> {
     };
 
     private handleConfigSelectChange = async (selectedValue: string) => {
+        const { viewBy, configList, settingList } = this.state;
+
         try {
-            const cfgKey = this.state.uniqueId + 1;
+            const kvpList = viewBy === ViewBy.Config ? configList : settingList;
+
+            // find the index of the dropdown list that has a value equals to selectedValue (e.g. SRC_PRE, SRC_TRAIN, etc...)
+            // using the index to obtain the key from KeyValuePair which is the config_key or config_setting_key
+            // if selectedValue is defined, then find the key for the selected value in the KeyValuePair[]
+            // Example: kvConfigSettings["SRC_PRE"].key returns the ConfigSettingKey
+            const cfgKey: number = selectedValue ? kvpList[kvpList.findIndex(v => v.value === selectedValue)].key : 0;
+            let cfgResult: IConfigValueResult[] = await this.getResult(cfgKey);
+
             if (this.isComponentMounted) {
-                this.setState({ uniqueId: cfgKey, selectedValue: selectedValue });
+                this.setState({ uniqueId: cfgKey, selectedValue: selectedValue, configValueResult: cfgResult });
             }
         } catch (asyncError) {
             console.log('ManageConfigSection handleOnSelect async error: ', asyncError);
         }
+    };
+
+    private getResult = async (key: number) => {
+        let result: IConfigValueResult[] = [];
+
+        if (key > 0) {
+            result =
+                this.state.viewBy === ViewBy.Config
+                    ? await manageConfigClient.getConfigValuesByConfigKey(key)
+                    : await manageConfigClient.getConfigValuesByConfigSettingKey(key);
+        }
+        return result;
     };
 }

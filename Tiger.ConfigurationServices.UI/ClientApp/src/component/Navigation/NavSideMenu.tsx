@@ -11,7 +11,7 @@ export class NavSideMenu extends React.Component<{}, {}> {
         return (
             <div className="container-fluid d-flex flex-fill" style={{ height: '100%' }}>
                 <div className="row flex-fill">
-                    <div className="col-2 col-xl-2 bg-light border-red">
+                    <div className="col-2 col-xl-2 bg-light">
                         <ul className="nav flex-column" style={{ color: '#FFFFFF' }}>
                             <li className="nav-item">
                                 <NavLink className="nav-link" to={'/'}>
