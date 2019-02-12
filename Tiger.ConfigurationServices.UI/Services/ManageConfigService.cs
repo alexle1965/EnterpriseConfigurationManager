@@ -142,6 +142,11 @@ namespace Tiger.ConfigurationServices.UI.Services
             return configValueResults.ToList();
         }
 
+        /// <summary>
+        ///  Get Config Value Result by Config Setting Key
+        /// </summary>
+        /// <param name="configSettingKey"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<ConfigValueResult>> GetConfigValuesByConfigSettingKeyAsync(int configSettingKey)
         {
             var configValueResults = new List<ConfigValueResult>();

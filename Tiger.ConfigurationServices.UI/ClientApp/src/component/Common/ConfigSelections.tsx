@@ -10,7 +10,7 @@ interface IProps {
     onConfigSelect: (selectedValue: string) => void;
 }
 
-interface IState {}
+interface IState { }
 
 export class ConfigSelections extends React.Component<IProps, IState> {
     static defaultProps = {
@@ -22,6 +22,7 @@ export class ConfigSelections extends React.Component<IProps, IState> {
         const selectLabel = isConfig ? 'Configuration' : 'Configuration Setting';
 
         return (
+            // style size the width of the dropdown
             <div className="form-check-inline" style={{ width: '100%' }}>
                 <label className="bold-text  m-2" htmlFor="configSelections">
                     {selectLabel}

@@ -5,7 +5,7 @@ export class ManageConfigContainer extends React.Component<{}, {}> {
         return (
             <>
 
-                <div> Manager Container </div>
+                <div> Manager Container - Place Holder for Now </div>
             </>
         );
     } // render
