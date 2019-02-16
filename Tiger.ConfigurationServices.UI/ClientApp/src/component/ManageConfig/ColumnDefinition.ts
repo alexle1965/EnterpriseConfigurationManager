@@ -1,3 +1,29 @@
+export const ConfigSettingResult = [
+    {
+        Header: 'Config Setting Name',
+        accessor: 'configSettingName',
+        headerClassName: 'bold-text bg-light text-left',
+        className: 'text-left small',
+        width: 400,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
+    },
+    {
+        Header: 'Description',
+        headerClassName: 'bold-text bg-light text-left',
+        accessor: 'configSettingDescription',
+        className: 'small',
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
+    },
+    {
+        Header: 'Config Setting Key',
+        headerClassName: 'bold-text bg-light text-center',
+        accessor: 'configSettingKey',
+        show: true,
+        className: 'text-center small',
+        width: 200
+    }
+];
+
 // this is a work around for filtering with case insensitive
 // default filtering method is case sensitive and start with
 // https://react-table.js.org/#/story/custom-filtering
@@ -13,8 +39,7 @@ export function filterCaseInsensitive(filter: any, row: any, method: string) {
     }
 }
 
-// Read-Only Columns for ManageConfigResult
-export const ManageConfigResultColumns = [
+const baseResultColumns = [
     {
         Header: 'Config Value Key',
         headerClassName: 'bold-text bg-light text-left',
@@ -64,7 +89,12 @@ export const ManageConfigResultColumns = [
         width: 400,
         filterable: true,
         filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
-    },
+    }
+];
+
+// concatenate to the baseResultColumns
+let readOnlyResultColumns = [
+    ...baseResultColumns,
     {
         Header: 'Config Value',
         headerClassName: 'bold-text bg-light text-left',
@@ -75,3 +105,6 @@ export const ManageConfigResultColumns = [
         filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     }
 ];
+
+// Read-Only Columns for ManageConfigResult
+export { readOnlyResultColumns };

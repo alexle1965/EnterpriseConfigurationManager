@@ -25,27 +25,37 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\History\**" />
+    <Compile Remove="ClientApp\src\navigation\**" />
+    <Compile Remove="ClientApp\src\shared\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\History\**" />
+    <Content Remove="ClientApp\src\navigation\**" />
+    <Content Remove="ClientApp\src\shared\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="ClientApp\src\History\**" />
+    <EmbeddedResource Remove="ClientApp\src\navigation\**" />
+    <EmbeddedResource Remove="ClientApp\src\shared\**" />
+    <None Remove="ClientApp\src\History\**" />
+    <None Remove="ClientApp\src\navigation\**" />
+    <None Remove="ClientApp\src\shared\**" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="clientapp\src\component\KeyValuePair.ts" />
     <None Remove="ClientApp\src\component\ManageServer\ManageServerContainer.tsx" />
-    <None Remove="clientapp\src\navigation\NavHeader.tsx" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\History\" />
     <Folder Include="ClientApp\src\models\" />
     <Folder Include="ClientApp\src\css\" />
-    <Folder Include="ClientApp\src\shared\" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="clientapp\src\component\KeyValuePair.ts" />
     <TypeScriptCompile Include="ClientApp\src\component\ManageServer\ManageServerContainer.tsx" />
-    <TypeScriptCompile Include="clientapp\src\navigation\NavHeader.tsx" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

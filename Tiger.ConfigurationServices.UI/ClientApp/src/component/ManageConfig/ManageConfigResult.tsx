@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IConfigValueResult } from '../../models/ConfigValueResultModel';
 import ReactTable from 'react-table';
-import { ManageConfigResultColumns } from './ColumnDefinition';
+import { readOnlyResultColumns } from './ColumnDefinition';
 
 interface IProps {
     editMode?: boolean;
@@ -18,6 +18,7 @@ export class ManageConfigResult extends React.Component<IProps, IState> {
     };
 
     public render() {
+        const columns = readOnlyResultColumns;
         return (
             <>
                 <ReactTable
@@ -32,7 +33,7 @@ export class ManageConfigResult extends React.Component<IProps, IState> {
                         // and scroll, since there is not enough room
                     }}
                     data={this.props.data}
-                    columns={ManageConfigResultColumns}
+                    columns={columns}
                 />
             </>
         );

@@ -38,8 +38,6 @@ export class ManageConfigSection extends React.Component<IProps, IState> {
     };
 
     public render(): JSX.Element {
-        // const data = this.state.configValueResult;
-
         return (
             <>
                 <div className="container-fluid">
@@ -72,13 +70,12 @@ export class ManageConfigSection extends React.Component<IProps, IState> {
                         <label className="text-left small bold-text">Record count: {this.state.configValueResult.length}</label>
                     )}
                 </div>
-                {/* <div>
-                    <h2>Debug:</h2>
-                    <h6>Edit Mode is: {this.state.checked ? 'on' : 'off'}</h6>
-                    <h6>View by: {this.state.viewBy}</h6>
-                    <h6>Selected value: {this.state.selectedValue}</h6>
-                    <h6>Config Value Results: {this.state.configValueResult.length}</h6>
-                </div> */}
+                <div>
+                    <h2>
+                        Debug: Edit Mode is: {this.state.checked ? 'on' : 'off'} | View by: {this.state.viewBy} | Selected value:{' '}
+                        {this.state.selectedValue} | Config Value Results: {this.state.configValueResult.length}
+                    </h2>
+                </div>
             </>
         );
     } // render
@@ -107,7 +104,7 @@ export class ManageConfigSection extends React.Component<IProps, IState> {
     // View By Options Config or Setting
     private toggleView = (selectedView: string) => {
         const optionList = selectedView === ViewBy.Config ? this.state.configList : this.state.settingList;
-        this.setState({ viewBy: selectedView, selectedValue: '', options: optionList });
+        this.setState({ viewBy: selectedView, selectedValue: '', options: optionList, configValueResult: [] });
     };
 
     private handleConfigSelectChange = async (selectedValue: string) => {
