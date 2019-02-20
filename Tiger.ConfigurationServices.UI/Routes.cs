@@ -11,5 +11,12 @@
             public const string ConfigValueByConfigKey = API + "manageconfig/result/{configkey}";
             public const string ConfigValueByConfigSettingKey = API + "manageconfig/result/setting/{configsettingkey}";
         }
+
+        public static class History
+        {
+            public const string ConfigEdit = API + "history/configedit.json";
+            public const string ConfigSettingEdit = API + "history/configsettingedit.json";
+            public const string ConfigValueEdit = API + "history/configvalueedit.json";
+        }
     }
 }

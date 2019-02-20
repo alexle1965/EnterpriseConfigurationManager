@@ -28,6 +28,7 @@ namespace Tiger.ConfigurationServices.UI
 
             // register new service here
             services.AddTransient<ManageConfigService>();
+            services.AddTransient<HistoryService>();
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)

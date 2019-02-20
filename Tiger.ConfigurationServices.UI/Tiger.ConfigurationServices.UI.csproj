@@ -45,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\component\History\HistoryClient.ts" />
     <None Remove="clientapp\src\component\KeyValuePair.ts" />
     <None Remove="ClientApp\src\component\ManageServer\ManageServerContainer.tsx" />
   </ItemGroup>
@@ -55,6 +56,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\component\History\HistoryClient.ts" />
     <TypeScriptCompile Include="ClientApp\src\component\ManageServer\ManageServerContainer.tsx" />
   </ItemGroup>
 
