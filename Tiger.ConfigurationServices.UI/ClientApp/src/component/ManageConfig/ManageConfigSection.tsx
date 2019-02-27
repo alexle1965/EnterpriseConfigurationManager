@@ -62,9 +62,7 @@ export class ManageConfigSection extends React.Component<IProps, IState> {
                 </div>
                 <div className="row mt-2">
                     <div className="col-12 mr-2" style={{ maxHeight: 720 }}>
-                        <div className="mr-2 my-2 border-blue">
-                            {this.state.configValueResult && <ManageConfigResult data={this.state.configValueResult} />}
-                        </div>
+                        <div className="mr-2 my-2">{this.state.configValueResult && <ManageConfigResult data={this.state.configValueResult} />}</div>
                     </div>
                 </div>
                 <div className="">
