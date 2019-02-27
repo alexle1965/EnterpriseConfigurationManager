@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IConfigValueResult } from '../../models/ConfigValueResultModel';
 import ReactTable from 'react-table';
-import { readOnlyResultColumns } from './ColumnDefinition';
+import { readOnlyResultColumns } from '../../models/EntityDefinition';
 
 interface IProps {
     editMode?: boolean;

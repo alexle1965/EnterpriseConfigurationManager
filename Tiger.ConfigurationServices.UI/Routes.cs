@@ -4,6 +4,13 @@
     {
         private const string API = "api/1/";
 
+        public static class Admin
+        {
+            public const string EditConfig = API + "admin/editconfig.json";
+            public const string EditSetting = API + "admin/editsetting.json";
+            public const string EditServer = API + "admin/editserver.json";
+        }
+
         public static class ManageConfig
         {
             public const string ConfigNames = API + "manageconfig/confignames.json";

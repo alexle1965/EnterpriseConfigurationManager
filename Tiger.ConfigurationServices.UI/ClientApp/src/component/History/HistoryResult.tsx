@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactTable from 'react-table';
-import { ConfigEditColumns, ConfigSettingEditColumns, ConfigValueEditColumns } from './ColumnDefinition';
+import { ConfigEditColumns, ConfigSettingEditColumns, ConfigValueEditColumns } from '../../models/EntityDefinition';
 import { ViewBy } from '../../models/Enum';
 
 interface IProps {

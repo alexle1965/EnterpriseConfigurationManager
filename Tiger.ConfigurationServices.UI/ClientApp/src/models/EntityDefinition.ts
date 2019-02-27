@@ -1,5 +1,166 @@
 import { format } from 'date-fns';
 
+// this is a work around for filtering with case insensitive
+// default filtering method is case sensitive and start with
+// https://react-table.js.org/#/story/custom-filtering
+export function filterCaseInsensitive(filter: any, row: any, method: string) {
+    const id = filter.pivotId || filter.id;
+
+    if (method === 'startwith') {
+        // start with
+        return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
+    } else {
+        // contains
+        return row[id] !== undefined ? String(row[filter.id].toLowerCase()).includes(filter.value.toLowerCase()) : true;
+    }
+}
+
+//
+// Admin
+//
+export const ConfigColumns = [
+    {
+        Header: 'Config Key',
+        accessor: 'configKey',
+        show: true,
+        headerClassName: 'bold-text bg-light text-center',
+        className: 'text-center small',
+        width: 100
+    },
+    {
+        Header: 'Config Name',
+        accessor: 'configName',
+        show: true,
+        headerClassName: 'bold-text bg-light text-left',
+        className: 'text-left small',
+        width: 200
+    },
+    {
+        Header: 'Description',
+        accessor: 'description',
+        show: true,
+        headerClassName: 'bold-text bg-light text-left',
+        className: 'text-left small',
+        minWidth: 300
+    },
+    {
+        Header: 'Curo Server',
+        accessor: 'curoDbServerKey',
+        show: true,
+        headerClassName: 'bold-text bg-light text-center',
+        className: 'text-center small',
+        width: 200
+    },
+    {
+        Header: 'Applog Server',
+        accessor: 'applogDbServerKey',
+        show: true,
+        headerClassName: 'bold-text bg-light text-center',
+        className: 'text-center small',
+        width: 200
+    }
+];
+
+export const ConfigSettingColumns = [
+    {
+        Header: 'Config Setting Key',
+        accessor: 'configSettingKey',
+        show: true,
+        headerClassName: 'bold-text bg-light text-center',
+        className: 'text-center small',
+        width: 200
+    },
+    {
+        Header: 'Config Setting Name',
+        accessor: 'configSettingName',
+        headerClassName: 'bold-text bg-light text-left',
+        className: 'small',
+        width: 300
+    },
+    {
+        Header: 'Description',
+        accessor: 'description',
+        headerClassName: 'bold-text bg-light text-left',
+        className: 'small'
+    }
+];
+
+//
+// Manage Config
+//
+const baseResultColumns = [
+    {
+        Header: 'Config Value Key',
+        headerClassName: 'bold-text bg-light text-left',
+        accessor: 'configValueKey',
+        show: false,
+        className: 'text-center small',
+        width: 200,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
+    },
+    {
+        Header: 'Config Key',
+        headerClassName: 'bold-text bg-light text-left',
+        accessor: 'configKey',
+        show: false,
+        className: 'text-center small',
+        width: 200,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
+    },
+    {
+        Header: 'Config Setting Key',
+        headerClassName: 'bold-text bg-light text-left',
+        accessor: 'configSettingKey',
+        show: false,
+        className: 'text-center small',
+        width: 200,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
+    },
+    {
+        Header: 'Config Name',
+        headerClassName: 'bold-text bg-light text-left',
+        accessor: 'configName',
+        show: true,
+        className: 'text-left small',
+        width: 200,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
+    },
+    {
+        Header: 'Config Setting Name',
+        headerClassName: 'bold-text bg-light text-left',
+        accessor: 'configSettingName',
+        show: true,
+        className: 'text-left small',
+        width: 400,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
+    }
+];
+
+// concatenate to the baseResultColumns
+let readOnlyResultColumns = [
+    ...baseResultColumns,
+    {
+        Header: 'Config Value',
+        headerClassName: 'bold-text bg-light text-left',
+        accessor: 'configValue',
+        show: true,
+        className: 'text-left small',
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
+    }
+];
+
+// Read-Only Columns for ManageConfigResult
+export { readOnlyResultColumns };
+
+//
+// History
+//
 const dateEnteredWidth = 150;
 const actionWidth = 95;
 const tlrWidth = 100;
@@ -209,18 +370,3 @@ export const ConfigValueEditColumns = [
         width: 200
     }
 ];
-
-// this is a work around for filtering with case insensitive
-// default filtering method is case sensitive
-// https://react-table.js.org/#/story/custom-filtering
-export function filterCaseInsensitive(filter: any, row: any, method: string) {
-    const id = filter.pivotId || filter.id;
-
-    if (method === 'startwith') {
-        // start with
-        return row[id] !== undefined ? String(row[id].toLowerCase()).startsWith(filter.value.toLowerCase()) : true;
-    } else {
-        // contains
-        return row[id] !== undefined ? String(row[filter.id].toLowerCase()).includes(filter.value.toLowerCase()) : true;
-    }
-}

@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Threading.Tasks;
 using Tiger.ConfigurationServices.UI.Services;
 
 namespace Tiger.ConfigurationServices.UnitTest
@@ -8,7 +9,7 @@ namespace Tiger.ConfigurationServices.UnitTest
     public class APIControllerTest
     {
         [TestMethod]
-        public async System.Threading.Tasks.Task GetConfigNames_Dropdown_Test()
+        public async Task GetConfigNames_Dropdown_Test()
         {
             // config dropdown
             ManageConfigService mcSvc = new ManageConfigService();
@@ -21,7 +22,7 @@ namespace Tiger.ConfigurationServices.UnitTest
         }
 
         [TestMethod]
-        public async System.Threading.Tasks.Task GetConfigSettings_Dropdown_Test()
+        public async Task GetConfigSettings_Dropdown_Test()
         {
             // setting dropdown
             ManageConfigService mcSvc = new ManageConfigService();
@@ -34,7 +35,7 @@ namespace Tiger.ConfigurationServices.UnitTest
         }
 
         [TestMethod]
-        public async System.Threading.Tasks.Task GetConfigValuesByConfigKeyAsync_Test()
+        public async Task GetConfigValuesByConfigKeyAsync_Test()
         {
             int configKeyParameter = 170; //USAC_DEV2
             ManageConfigService mcSvc = new ManageConfigService();
@@ -47,7 +48,7 @@ namespace Tiger.ConfigurationServices.UnitTest
         }
 
         [TestMethod]
-        public async System.Threading.Tasks.Task GetConfigValuesByConfigSettingKeyAsync_Test()
+        public async Task GetConfigValuesByConfigSettingKeyAsync_Test()
         {
             int configSettingKey = 101; // CuroDbName
             ManageConfigService mcSvc = new ManageConfigService();
@@ -56,6 +57,42 @@ namespace Tiger.ConfigurationServices.UnitTest
             foreach (var item in results)
             {
                 Console.WriteLine($"Config Key: {item.ConfigKey} [{item.ConfigSettingName} - {item.ConfigValue}]");
+            }
+        }
+
+        [TestMethod]
+        public async Task GetServersAsync_Test()
+        {
+            AdminService adminSvc = new AdminService();
+            var results = await adminSvc.GetServersAsync();
+
+            foreach (var item in results)
+            {
+                Console.WriteLine($"{item.ServersKey} [{item.ServerName}] | {item.ServerType} {item.IsActive}");
+            }
+        }
+
+        [TestMethod]
+        public async Task GetAllConfigAsync_Test()
+        {
+            AdminService adminSvc = new AdminService();
+            var results = await adminSvc.GetAllConfigAsync();
+
+            foreach (var item in results)
+            {
+                Console.WriteLine($"{item.ConfigKey} [{item.ConfigName}] ");
+            }
+        }
+
+        [TestMethod]
+        public async Task GetAllConfigSettingAsync_Test()
+        {
+            AdminService adminSvc = new AdminService();
+            var results = await adminSvc.GetAllConfigSettingAsync();
+
+            foreach (var item in results)
+            {
+                Console.WriteLine($"{item.ConfigSettingKey} [{item.ConfigSettingName} - {item.Description}] ");
             }
         }
     }

@@ -15,13 +15,13 @@ export class Sidebar extends React.Component<{}, {}> {
                     </li>
                     <li className="nav-item" title="Edit Server">
                         <NavLink className="nav-link" to={'/ManageServer'} activeClassName="nav-link-active">
-                            <FontAwesomeIcon icon="server" className="mr-2" style={{ color: '#4682B4' }} />
+                            <FontAwesomeIcon icon="server" className="mr-2" style={{ color: '#00bfff' }} />
                             Manage Servers
                         </NavLink>
                     </li>
                     <li className="nav-item" title="Edit Config Value by Config or Setting">
                         <NavLink className="nav-link" to={'/ManageConfig'} activeClassName="nav-link-active">
-                            <FontAwesomeIcon icon="tools" className="mr-2" style={{ color: '#1E90FF' }} />
+                            <FontAwesomeIcon icon="tools" className="mr-2" style={{ color: '#0b2038' }} />
                             Manage Configuration
                         </NavLink>
                     </li>
@@ -29,6 +29,21 @@ export class Sidebar extends React.Component<{}, {}> {
                         <NavLink className="nav-link" to={'/History'} activeClassName="nav-link-active">
                             <FontAwesomeIcon icon="history" className="mr-2" style={{ color: '#800000' }} />
                             View History
+                        </NavLink>
+                    </li>
+                    <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Administration</span>
+                    </h6>
+                    <li className="nav-item" title="Add/Edit Config">
+                        <NavLink className="nav-link" to={'/AdminConfig'} activeClassName="nav-link-active">
+                            <FontAwesomeIcon icon="pen" className="mr-2" style={{ color: '#DAA520' }} />
+                            Add/Edit Config
+                        </NavLink>
+                    </li>
+                    <li className="nav-item" title="Add/Edit Setting">
+                        <NavLink className="nav-link" to={'/AdminSetting'} activeClassName="nav-link-active">
+                            <FontAwesomeIcon icon="pen" className="mr-2" style={{ color: '#DAA520' }} />
+                            Add/Edit Config Setting
                         </NavLink>
                     </li>
                 </ul>

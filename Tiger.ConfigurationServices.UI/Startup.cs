@@ -27,9 +27,9 @@ namespace Tiger.ConfigurationServices.UI
             services.AddDbContext<MaintContext>(optionsBuilder => optionsBuilder.UseSqlServer("Data Source=srcmaint;Initial Catalog=Maint;Integrated Security=False;User Id=Maint;Password=Yg98pwHw-u0qxl;MultipleActiveResultSets=True"));
 
             // register new service here
-            services.AddTransient<ManageConfigService>();
+            services.AddTransient<AdminService>();
             services.AddTransient<HistoryService>();
-
+            services.AddTransient<ManageConfigService>();
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(options =>

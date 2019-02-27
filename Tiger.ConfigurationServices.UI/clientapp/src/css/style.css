@@ -144,7 +144,7 @@
 
 @media (min-width: 768px) {
     [role='main'] {
-        padding-top: 90px; /* 80px is the vertical distance from the header | Space for fixed navbar */
+        padding-top: 90px; /* 90px is the vertical distance from the header | Space for fixed navbar */
     }
 }
 
