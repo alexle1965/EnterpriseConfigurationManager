@@ -28,7 +28,7 @@ export class ConfigSelections extends React.Component<IProps, IState> {
                     {selectLabel}
                 </label>
                 <div style={{ width: '40%' }}>
-                    <SelectDropdown optionList={this.props.options} selectedValue={this.props.selectedValue} onSelect={this.handleOnSelect} />
+                    <SelectDropdown  optionList={this.props.options} selectedValue={this.props.selectedValue} onSelect={this.handleOnSelect} />
                 </div>
             </div>
         );

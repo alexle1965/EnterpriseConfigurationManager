@@ -38,6 +38,8 @@ export class ManageConfigSection extends React.Component<IProps, IState> {
     };
 
     public render(): JSX.Element {
+        let isDebug: boolean = false;
+
         return (
             <>
                 <div className="container-fluid">
@@ -70,12 +72,14 @@ export class ManageConfigSection extends React.Component<IProps, IState> {
                         <label className="text-left small bold-text">Record count: {this.state.configValueResult.length}</label>
                     )}
                 </div>
-                <div>
-                    <h2>
-                        Debug: Edit Mode is: {this.state.checked ? 'on' : 'off'} | View by: {this.state.viewBy} | Selected value:{' '}
-                        {this.state.selectedValue} | Config Value Results: {this.state.configValueResult.length}
-                    </h2>
-                </div>
+                {isDebug && (
+                    <div>
+                        <h2>
+                            Debug: Edit Mode is: {this.state.checked ? 'on' : 'off'} | View by: {this.state.viewBy} | Selected value:{' '}
+                            {this.state.selectedValue} | Config Value Results: {this.state.configValueResult.length}
+                        </h2>
+                    </div>
+                )}
             </>
         );
     } // render

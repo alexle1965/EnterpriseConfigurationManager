@@ -39,6 +39,7 @@ export class SelectDropdown extends React.Component<IProps, IState> {
 
         return (
             <Select
+                className="small"
                 value={_value}
                 placeholder={this.props.title}
                 isClearable={true}
