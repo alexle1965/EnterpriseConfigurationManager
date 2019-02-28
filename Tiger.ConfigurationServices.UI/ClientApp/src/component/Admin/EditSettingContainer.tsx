@@ -22,6 +22,27 @@ export class EditSettingContainer extends React.Component<{}, IState> {
 
     public render(): JSX.Element {
         const { settingResult } = this.state;
+        const ActionColumn = [
+            {
+                headerClassName: 'bold-text bg-light text-center',
+                className: 'text-center small',
+                width: 100,
+                Cell: (
+                    <div>
+                        <button className="btn btn-link btn-sm" title="Edit Config Setting">
+                            <FontAwesomeIcon icon="pen" className="small" style={{ color: '#DAA520' }} />
+                        </button>
+                        <button className="btn btn-link btn-sm" title="Delete Config Setting">
+                            <FontAwesomeIcon icon="trash" className="small" style={{ color: '#FF0000' }} />
+                        </button>
+                    </div>
+                )
+            }
+        ];
+
+        // add Edit button to the column definition
+        // ConfigSettingColumns definition is in EntityDefinition.ts
+        const _columns = [...ActionColumn, ...ConfigSettingColumns];
 
         return (
             <>
@@ -44,11 +65,12 @@ export class EditSettingContainer extends React.Component<{}, IState> {
                             defaultPageSize={-1}
                             showPagination={false}
                             showPageJump={true}
-                            filterable
+                            filterable={true}
                             style={{ height: '700px' }}
                             data={settingResult}
                             noDataText="No Record Found"
-                            columns={ConfigSettingColumns}
+                            columns={_columns}
+                            getTdProps={this.alignTextVertically}
                         />
                     </div>
                 </div>
@@ -73,5 +95,15 @@ export class EditSettingContainer extends React.Component<{}, IState> {
 
         isLoading = this.state.settingResult && this.state.settingResult.length === 0;
         return isLoading && <Loading />;
+    };
+
+    private alignTextVertically = () => {
+        return {
+            style: {
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center'
+            }
+        };
     };
 }

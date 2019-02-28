@@ -21,6 +21,28 @@ export class EditConfigContainer extends React.Component<{}, IState> {
     }
 
     public render(): JSX.Element {
+        const ActionColumn = [
+            {
+                headerClassName: 'bold-text bg-light text-center',
+                className: 'text-center small',
+                filterable: false,
+                width: 100,
+                Cell: (
+                    <div>
+                        <button className="btn btn-link btn-sm" title="Edit Config Setting">
+                            <FontAwesomeIcon icon="pen" className="small" style={{ color: '#DAA520' }} />
+                        </button>
+                        <button className="btn btn-link btn-sm" title="Delete Config Setting">
+                            <FontAwesomeIcon icon="trash" className="small" style={{ color: '#FF0000' }} />
+                        </button>
+                    </div>
+                )
+            }
+        ];
+
+        // add column with Edit button to the column definition
+        const _columns = [...ActionColumn, ...ConfigColumns];
+
         return (
             <>
                 <div>{this.renderLoading()}</div>
@@ -45,7 +67,8 @@ export class EditConfigContainer extends React.Component<{}, IState> {
                             style={{ height: '700px' }}
                             data={this.state.editConfigResult}
                             noDataText="No Record Found"
-                            columns={ConfigColumns}
+                            columns={_columns}
+                            getTdProps={this.alignTextVertically}
                         />
                     </div>
                 </div>
@@ -72,5 +95,15 @@ export class EditConfigContainer extends React.Component<{}, IState> {
 
         isLoading = this.state.editConfigResult && this.state.editConfigResult.length === 0;
         return isLoading && <Loading />;
+    };
+
+    private alignTextVertically = () => {
+        return {
+            style: {
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center'
+            }
+        };
     };
 } //class

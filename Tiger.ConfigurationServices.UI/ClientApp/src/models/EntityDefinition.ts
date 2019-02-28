@@ -20,14 +20,6 @@ export function filterCaseInsensitive(filter: any, row: any, method: string) {
 //
 export const ConfigColumns = [
     {
-        Header: 'Config Key',
-        accessor: 'configKey',
-        show: true,
-        headerClassName: 'bold-text bg-light text-center',
-        className: 'text-center small',
-        width: 100
-    },
-    {
         Header: 'Config Name',
         accessor: 'configName',
         show: true,
@@ -170,13 +162,13 @@ export const ConfigEditColumns = [
         id: 'dateEntered',
         Header: 'Date Entered',
         accessor: (d: any) => {
-            return format(d.dateEntered, 'MM/DD/YYYY');
+            return format(d.dateEntered, 'YYYY-MM-DD');
         },
         show: true,
         headerClassName: 'bold-text bg-light text-left',
         className: 'text-center small',
         maxWidth: dateEnteredWidth,
-        sortable: false,
+        sortable: true,
         filterable: true,
         filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '') // work around solution
     },
@@ -275,7 +267,7 @@ export const ConfigSettingEditColumns = [
         id: 'dateEntered',
         Header: 'Date Entered',
         accessor: (d: any) => {
-            return d.dateEntered.toDateString();
+            return format(d.dateEntered, 'YYYY-MM-DD');
         },
         show: true,
         headerClassName: 'bold-text bg-light text-left',

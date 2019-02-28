@@ -36,13 +36,13 @@ export class Sidebar extends React.Component<{}, {}> {
                     </h6>
                     <li className="nav-item" title="Add/Edit Config">
                         <NavLink className="nav-link" to={'/AdminConfig'} activeClassName="nav-link-active">
-                            <FontAwesomeIcon icon="pen" className="mr-2" style={{ color: '#DAA520' }} />
+                            <FontAwesomeIcon icon="tasks" className="mr-2" style={{ color: '#0000FF' }} />
                             Add/Edit Config
                         </NavLink>
                     </li>
                     <li className="nav-item" title="Add/Edit Setting">
                         <NavLink className="nav-link" to={'/AdminSetting'} activeClassName="nav-link-active">
-                            <FontAwesomeIcon icon="pen" className="mr-2" style={{ color: '#DAA520' }} />
+                            <FontAwesomeIcon icon="tasks" className="mr-2" style={{ color: '#0000FF' }} />
                             Add/Edit Config Setting
                         </NavLink>
                     </li>

@@ -23,6 +23,7 @@ export class HistoryResult extends React.Component<IProps, IState> {
                             defaultPageSize={-1}
                             showPagination={false}
                             showPageJump={false}
+                            filterable={true}
                             noDataText="No Record Found"
                             style={{ height: '700px' }}
                             data={this.props.data}

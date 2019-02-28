@@ -30,6 +30,18 @@ export class BodyContent extends React.Component<{}, {}> {
     }
 }
 
-// Note: The distance from the header to the top of the body content is set in the style.css using padding-top: 90px
 // Route does NOT follow the physical path of project structure.  Path name is arbitrarily set, but it is the component
 // that picks up the correct content.
+
+// Note: The distance from the header to the top of the body content is set
+// in the style.css using padding - top: 90px (see below)
+//
+// [role='main'] {
+//     padding-top: 133px; /* Space for fixed navbar */
+// }
+
+// @media (min-width: 768px) {
+//     [role='main'] {
+//         padding-top: 90px; /* 90px is the vertical distance from the header | Space for fixed navbar */
+//     }
+// }
