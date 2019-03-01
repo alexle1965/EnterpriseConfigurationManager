@@ -61,6 +61,7 @@ export const ConfigColumns = [
     }
 ];
 
+// configSetting table
 export const ConfigSettingColumns = [
     {
         Header: 'Config Setting Key',
@@ -82,6 +83,43 @@ export const ConfigSettingColumns = [
         accessor: 'description',
         headerClassName: 'bold-text bg-light text-left',
         className: 'small'
+    }
+];
+
+// servers table
+export const ServersColumns = [
+    {
+        Header: 'Servers Key',
+        accessor: 'serversKey',
+        show: true,
+        headerClassName: 'bold-text bg-light text-center',
+        className: 'text-center small',
+        width: 200
+    },
+    {
+        Header: 'Servers Name',
+        accessor: 'serverName',
+        headerClassName: 'bold-text bg-light text-left',
+        className: 'small',
+        width: 300
+    },
+    {
+        Header: 'Servers Type',
+        accessor: 'serverType',
+        headerClassName: 'bold-text bg-light text-center',
+        className: 'text-center small',
+        maxWidth: 150
+    },
+    {
+        id: 'Active',
+        Header: 'isActive',
+        accessor: (d: any) => {
+            return d.isActive ? 'Y' : '';
+        },
+        show: true,
+        headerClassName: 'bold-text bg-light text-center ',
+        className: 'text-center small',
+        maxWidth: 150
     }
 ];
 
@@ -257,16 +295,16 @@ export const ConfigEditColumns = [
         headerClassName: 'bold-text bg-light text-left',
         className: 'text-center small'
     },
-    
+
     {
         id: 'isProduction',
         Header: 'Production',
         accessor: (d: any) => {
-            return d.isProduction ? 'Yes' : '';
+            return d.isProduction ? 'Y' : '';
         },
         show: true,
         headerClassName: 'bold-text bg-light text-center ',
-        className: 'text-center',
+        className: 'text-center small',
         maxWidth: 150
     }
 ];

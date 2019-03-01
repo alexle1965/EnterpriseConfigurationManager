@@ -7,6 +7,7 @@ import { ManageConfigSection } from '../ManageConfig/ManageConfigSection';
 import { Sidebar } from './Sidebar';
 import { EditConfigContainer } from '../Admin/EditConfigContainer';
 import { EditSettingContainer } from '../Admin/EditSettingContainer';
+import { EditServersContainer } from '../Admin/EditServersContainer';
 
 export class BodyContent extends React.Component<{}, {}> {
     public render(): JSX.Element {
@@ -21,6 +22,7 @@ export class BodyContent extends React.Component<{}, {}> {
                         <Route exact path="/ManageServer" component={ManageServerContainer} />
                         <Route exact path="/ManageConfig" component={ManageConfigSection} />
                         <Route exact path="/History" component={HistoryContainer} />
+                        <Route path="/AdminServer" component={EditServersContainer} />
                         <Route path="/AdminConfig" component={EditConfigContainer} />
                         <Route path="/AdminSetting" component={EditSettingContainer} />
                     </main>

@@ -17,6 +17,7 @@ export class ManageConfigResult extends React.Component<IProps, IState> {
         selectedValue: ''
     };
 
+    // Render
     public render() {
         const columns = readOnlyResultColumns;
         return (

@@ -1,22 +1,22 @@
 import * as React from 'react';
-import { IConfig } from '../../models/ConfigModel';
+import { IServers } from '../../models/ServersModel';
 import { AdminClient } from './AdminClient';
-import { Loading } from '../Common/Loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ServersColumns } from '../../models/EntityDefinition';
+import { Loading } from '../Common/Loading';
 import ReactTable from 'react-table';
-import { ConfigColumns } from '../../models/EntityDefinition';
 
 interface IState {
-    editConfigResult: IConfig[];
-    selectedConfigKey: number;
+    editServersResult: IServers[];
+    selectedKey: number;
     actionType: string;
 }
 const adminClient = new AdminClient();
 
-export class EditConfigContainer extends React.Component<{}, IState> {
+export class EditServersContainer extends React.Component<{}, IState> {
     public state = {
-        editConfigResult: [],
-        selectedConfigKey: 0,
+        editServersResult: [],
+        selectedKey: 0,
         actionType: ''
     };
 
@@ -53,14 +53,14 @@ export class EditConfigContainer extends React.Component<{}, IState> {
 
         // add Edit & Delete buttons to the ConfigSettingColumns column definition
         // ConfigColumns definition is in EntityDefinition.ts
-        const _columns = [...ActionColumn, ...ConfigColumns];
+        const _columns = [...ActionColumn, ...ServersColumns];
 
         return (
             <>
                 <div className="row">
                     <div className="col-2">
                         <button id="Add" name="btnAdd" type="button" className="btn btn-outline-primary my-2">
-                            <FontAwesomeIcon icon="plus" className="mr-2" style={{ color: '#007bf' }} /> Add New Config
+                            <FontAwesomeIcon icon="plus" className="mr-2" style={{ color: '#007bf' }} /> Add New Server
                         </button>
                     </div>
                     <div className="col text-center">{this.renderLoading()}</div>
@@ -76,8 +76,8 @@ export class EditConfigContainer extends React.Component<{}, IState> {
                             showPagination={false}
                             showPageJump={true}
                             filterable
-                            style={{ height: '700px' }}
-                            data={this.state.editConfigResult}
+                            style={{ height: '700px', width: '900px' }}
+                            data={this.state.editServersResult}
                             noDataText="No Record Found"
                             columns={_columns}
                             getTrProps={this.highlightSelectedRow}
@@ -88,15 +88,15 @@ export class EditConfigContainer extends React.Component<{}, IState> {
                 <div className="row">
                     <div className="col">
                         <div className="">
-                            {this.state.editConfigResult && (
-                                <label className="text-left small bold-text">Record count: {this.state.editConfigResult.length}</label>
+                            {this.state.editServersResult && (
+                                <label className="text-left small bold-text">Record count: {this.state.editServersResult.length}</label>
                             )}
                         </div>
                     </div>
                 </div>
                 <div>
                     <h6>
-                        Debug Action: {this.state.actionType} - You selected configKey: {this.state.selectedConfigKey}
+                        Debug Action: {this.state.actionType} - You selected servers key: {this.state.selectedKey}
                     </h6>
                 </div>
             </>
@@ -104,14 +104,14 @@ export class EditConfigContainer extends React.Component<{}, IState> {
     } // render
 
     private async load() {
-        const allConfigs = await adminClient.getConfigs();
-        this.setState({ editConfigResult: allConfigs });
+        const results = await adminClient.getServers();
+        this.setState({ editServersResult: results });
     }
 
     private renderLoading = () => {
         let isLoading: boolean = false;
 
-        isLoading = this.state.editConfigResult && this.state.editConfigResult.length === 0;
+        isLoading = this.state.editServersResult && this.state.editServersResult.length === 0;
         return isLoading && <Loading />;
     };
 
@@ -135,8 +135,8 @@ export class EditConfigContainer extends React.Component<{}, IState> {
                 // when the users click on the Edit / Delete buttons on the datagrid
                 // then getTdProps is invoked immediately after that.  This is where
                 // we set the state for the selectedConfigKey and clear the actionType
-                if (column && column.row.configKey) {
-                    this.setState({ selectedConfigKey: column.row.configKey });
+                if (column && column.row.serversKey) {
+                    this.setState({ selectedKey: column.row.serversKey });
                 }
                 // --- DO NOT DELETE ---
                 // IMPORTANT! React-Table uses onClick internally to trigger
@@ -166,11 +166,11 @@ export class EditConfigContainer extends React.Component<{}, IState> {
     // getTdProps={(state, rowInfo, column, instance)
     // must have rowInfo in other to access the values of the column
     private highlightSelectedRow = (rowInfo: any, column: any) => {
-        const modifiedKey = this.state.selectedConfigKey;
-        const toolTip = `Config Key: ${column.original.configKey}`;
+        const modifiedKey = this.state.selectedKey;
+        const toolTip = `Servers Key: ${column.original.serversKey}`;
 
         // Look up the index for the modified rows.  If found, highlight the row
-        if (modifiedKey === column.original.configKey) {
+        if (modifiedKey === column.original.serversKey) {
             return {
                 style: {
                     background: '#E6E6FA',

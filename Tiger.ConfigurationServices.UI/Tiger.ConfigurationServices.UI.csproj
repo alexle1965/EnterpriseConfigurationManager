@@ -48,16 +48,19 @@
     <None Remove="ClientApp\src\component\History\HistoryClient.ts" />
     <None Remove="clientapp\src\component\KeyValuePair.ts" />
     <None Remove="ClientApp\src\component\ManageServer\ManageServerContainer.tsx" />
+    <None Remove="ClientApp\src\models\ServersEdit.ts" />
+    <None Remove="ClientApp\src\models\ServersModel.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\models\" />
     <Folder Include="ClientApp\src\css\" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\component\History\HistoryClient.ts" />
     <TypeScriptCompile Include="ClientApp\src\component\ManageServer\ManageServerContainer.tsx" />
+    <TypeScriptCompile Include="ClientApp\src\models\ServersEdit.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\ServersModel.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

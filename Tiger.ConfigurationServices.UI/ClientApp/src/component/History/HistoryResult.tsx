@@ -2,6 +2,7 @@ import * as React from 'react';
 import ReactTable from 'react-table';
 import { ConfigEditColumns, ConfigSettingEditColumns, ConfigValueEditColumns } from '../../models/EntityDefinition';
 import { ViewBy } from '../../models/Enum';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IProps {
     detailId: string;
@@ -28,6 +29,7 @@ export class HistoryResult extends React.Component<IProps, IState> {
                             style={{ height: '700px' }}
                             data={this.props.data}
                             columns={columns}
+                            getTdProps={this.getTdProps}
                         />
                     </div>
                 </div>
@@ -46,5 +48,21 @@ export class HistoryResult extends React.Component<IProps, IState> {
             default:
                 return;
         }
+    };
+
+    private getTdProps = (rowInfo: any, column: any) => {
+        // to capture a value from an individual column use this syntax:
+        // "column.row.<your_variable_name>" or "column.original.<your_variable_name>"
+
+        // Definition of column:
+        //
+        // column.index 	- row index number
+        // column.original 	- original column values for the selected row
+        // column.row		- column values for the selected row
+
+        if (column.row.isProduction === 'Y') {
+            column.row.isProduction = <FontAwesomeIcon icon="check" className="text-danger" />;
+        }
+        return {};
     };
 } // export

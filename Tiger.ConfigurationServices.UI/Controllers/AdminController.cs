@@ -16,12 +16,12 @@ namespace Tiger.ConfigurationServices.UI.Controllers
         }
 
         [HttpGet]
-        [Route(Routes.Admin.EditServer)]
+        [Route(Routes.Admin.EditServers)]
         public async Task<IActionResult> GetServersAsync()
         {
-            var allSettings = await _adminSvc.GetServersAsync();
+            var allServers = await _adminSvc.GetServersAsync();
 
-            return Json(allSettings);
+            return Json(allServers);
         }
 
         [HttpGet]

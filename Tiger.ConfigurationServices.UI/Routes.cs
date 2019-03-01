@@ -8,7 +8,7 @@
         {
             public const string EditConfig = API + "admin/editconfig.json";
             public const string EditSetting = API + "admin/editsetting.json";
-            public const string EditServer = API + "admin/editserver.json";
+            public const string EditServers = API + "admin/editservers.json";
         }
 
         public static class ManageConfig
