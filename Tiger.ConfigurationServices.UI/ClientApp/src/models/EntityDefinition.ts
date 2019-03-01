@@ -20,6 +20,14 @@ export function filterCaseInsensitive(filter: any, row: any, method: string) {
 //
 export const ConfigColumns = [
     {
+        Header: 'Config Key',
+        accessor: 'configKey',
+        show: true,
+        headerClassName: 'bold-text bg-light text-center',
+        className: 'text-center small',
+        width: 100
+    },
+    {
         Header: 'Config Name',
         accessor: 'configName',
         show: true,
@@ -222,17 +230,6 @@ export const ConfigEditColumns = [
         filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '') // work around solution
     },
     {
-        id: 'isProduction',
-        Header: 'Production',
-        accessor: (d: any) => {
-            return d.isProduction;
-        },
-        show: true,
-        headerClassName: 'bold-text bg-light text-center ',
-        className: 'text-center',
-        maxWidth: 150
-    },
-    {
         Header: 'Config Edit Key',
         accessor: 'configEditKey',
         show: false,
@@ -259,6 +256,18 @@ export const ConfigEditColumns = [
         show: false,
         headerClassName: 'bold-text bg-light text-left',
         className: 'text-center small'
+    },
+    
+    {
+        id: 'isProduction',
+        Header: 'Production',
+        accessor: (d: any) => {
+            return d.isProduction ? 'Yes' : '';
+        },
+        show: true,
+        headerClassName: 'bold-text bg-light text-center ',
+        className: 'text-center',
+        maxWidth: 150
     }
 ];
 

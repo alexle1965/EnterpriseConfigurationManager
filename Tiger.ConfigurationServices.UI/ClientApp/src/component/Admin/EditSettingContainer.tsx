@@ -7,13 +7,17 @@ import { AdminClient } from './AdminClient';
 import { ConfigSettingColumns } from '../../models/EntityDefinition';
 
 interface IState {
-    settingResult: IConfigSetting[];
+    editSettingResult: IConfigSetting[];
+    selectedConfigSettingKey: number;
+    actionType: string;
 }
 const adminClient = new AdminClient();
 
 export class EditSettingContainer extends React.Component<{}, IState> {
     public state = {
-        settingResult: []
+        editSettingResult: [],
+        selectedConfigSettingKey: 0,
+        actionType: ''
     };
 
     public componentDidMount(): void {
@@ -21,18 +25,27 @@ export class EditSettingContainer extends React.Component<{}, IState> {
     }
 
     public render(): JSX.Element {
-        const { settingResult } = this.state;
+        const { editSettingResult: settingResult } = this.state;
+
+        // Edit & Delete buttons
         const ActionColumn = [
             {
                 headerClassName: 'bold-text bg-light text-center',
                 className: 'text-center small',
                 width: 100,
+                filterable: false,
                 Cell: (
                     <div>
-                        <button className="btn btn-link btn-sm" title="Edit Config Setting">
+                        <button id="Edit" name="btnEdit" className="btn btn-link btn-sm" title="Edit Config Setting" onClick={this.handleOnClick}>
                             <FontAwesomeIcon icon="pen" className="small" style={{ color: '#DAA520' }} />
                         </button>
-                        <button className="btn btn-link btn-sm" title="Delete Config Setting">
+                        <button
+                            id="Delete"
+                            name="btnDelete"
+                            className="btn btn-link btn-sm"
+                            title="Delete Config Setting"
+                            onClick={this.handleOnClick}
+                        >
                             <FontAwesomeIcon icon="trash" className="small" style={{ color: '#FF0000' }} />
                         </button>
                     </div>
@@ -40,7 +53,7 @@ export class EditSettingContainer extends React.Component<{}, IState> {
             }
         ];
 
-        // add Edit button to the column definition
+        // add Edit & Delete buttons to the ConfigSettingColumns column definition
         // ConfigSettingColumns definition is in EntityDefinition.ts
         const _columns = [...ActionColumn, ...ConfigSettingColumns];
 
@@ -70,7 +83,41 @@ export class EditSettingContainer extends React.Component<{}, IState> {
                             data={settingResult}
                             noDataText="No Record Found"
                             columns={_columns}
-                            getTdProps={this.alignTextVertically}
+                            getTdProps={(rowInfo: any, column: any) => {
+                                // must have rowInfo in order for getTdProps to work
+                                return {
+                                    style: {
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'center'
+                                    },
+                                    onClick: () => {
+                                        // the button onclick action will trigger the handleOnClick method first
+                                        // when the users click on the Edit / Delete buttons on the datagrid
+                                        // then getTdProps is invoked immediately after that.  This is where
+                                        // we set the state for the selectedConfigKey and clear the actionType
+                                        if (column && column.row.configSettingKey) {
+                                            this.setState({ selectedConfigSettingKey: column.row.configSettingKey });
+                                        }
+                                        // --- DO NOT DELETE ---
+                                        // IMPORTANT! React-Table uses onClick internally to trigger
+                                        // events like expanding SubComponents and pivots.
+                                        // By default a custom 'onClick' handler will override this functionality.
+                                        // If you want to fire the original onClick handler, call the
+                                        // 'handleOriginal' function.
+                                        // onClick: (e, handleOriginal) => {
+                                        // console.log("A Td Element was clicked!");
+                                        // console.log("it produced this event:", e);
+                                        // console.log("It was in this column:", column);
+                                        // console.log("It was in this row:", rowInfo);
+                                        // console.log("It was in this table instance:", instance);
+                                        // if (handleOriginal) {
+                                        //     handleOriginal();
+                                        // }
+                                        //}
+                                    }
+                                };
+                            }}
                         />
                     </div>
                 </div>
@@ -81,29 +128,40 @@ export class EditSettingContainer extends React.Component<{}, IState> {
                         </div>
                     </div>
                 </div>
+                <div>
+                    <h6>
+                        Action: {this.state.actionType} - You selected configKey: {this.state.selectedConfigSettingKey}
+                    </h6>
+                </div>
             </>
         );
     } // render
 
     private async load() {
         const allSettings = await adminClient.getSettings();
-        this.setState({ settingResult: allSettings });
+        this.setState({ editSettingResult: allSettings });
     }
 
     private renderLoading = () => {
         let isLoading: boolean = false;
 
-        isLoading = this.state.settingResult && this.state.settingResult.length === 0;
+        isLoading = this.state.editSettingResult && this.state.editSettingResult.length === 0;
         return isLoading && <Loading />;
     };
 
-    private alignTextVertically = () => {
-        return {
-            style: {
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center'
-            }
-        };
+    private handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const action = e.currentTarget.id;
+        this.setState({ actionType: action });
     };
-}
+
+    // private alignTextVertically = () => {
+    //     return {
+    //         style: {
+    //             display: 'flex',
+    //             flexDirection: 'column',
+    //             justifyContent: 'center'
+    //         }
+    //     };
+    // };
+} // class
