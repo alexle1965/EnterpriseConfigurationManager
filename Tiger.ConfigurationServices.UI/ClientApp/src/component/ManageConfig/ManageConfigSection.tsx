@@ -62,7 +62,17 @@ export class ManageConfigSection extends React.Component<IProps, IState> {
                 </div>
                 <div className="row mt-2">
                     <div className="col-12 mr-2" style={{ maxHeight: 720 }}>
-                        <div className="mr-2 my-2">{this.state.configValueResult && <ManageConfigResult data={this.state.configValueResult} />}</div>
+                        <div className="mr-2 my-2">
+                            {this.state.configValueResult && (
+                                <ManageConfigResult
+                                    key={this.state.uniqueId}
+                                    editMode={this.state.checked}
+                                    data={this.state.configValueResult}
+                                    onCancel={this.handleCancel}
+                                    onSave={this.handleSave}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="">
@@ -81,6 +91,42 @@ export class ManageConfigSection extends React.Component<IProps, IState> {
             </>
         );
     } // render
+
+    private handleSelect = async (selectedValue: string) => {
+        try {
+            let cfValues: IConfigValueResult[] = [];
+            const isConfig = this.state.viewBy == ViewBy.Config;
+            const kvpList = isConfig ? this.state.configList : this.state.settingList;
+            // find the index of the dropdown list that has a value equals to selectedValue (e.g. SRC_PRE, SRC_TRAIN, etc...)
+            // using the index to obtain the key from KeyValuePair which is the config_key or config_setting_key
+            // if selectedValue is defined, then find the key for the selected value in the KeyValuePair[]
+            // Example: kvConfigSettings["SRC_PRE"].key returns the ConfigSettingKey
+            const cfgKey: number = selectedValue ? kvpList[kvpList.findIndex(v => v.value === selectedValue)].key : 0;
+
+            if (cfgKey > 0) {
+                cfValues = isConfig
+                    ? await manageConfigClient.getConfigValuesByConfigKey(cfgKey)
+                    : await manageConfigClient.getConfigValuesByConfigSettingKey(cfgKey);
+            }
+
+            if (this.isComponentMounted) {
+                this.setState({ uniqueId: cfgKey, selectedValue: selectedValue, configValueResult: cfValues });
+            }
+        } catch (asyncError) {
+            console.log('ManageConfigSection handleOnSelect async error: ', asyncError);
+        }
+    };
+
+    private handleCancel = () => {
+        this.handleSelect(this.state.selectedValue);
+    };
+
+    private handleSave = (modifiedConfigValues: IConfigValueResult[]) => {
+        // convert IConfigValueResult to IConfigValue for updating the database
+        //  TODO: implement backend logic
+        console.log('Save Data...');
+        console.log(modifiedConfigValues);
+    };
 
     public async componentDidMount() {
         this.fetchData();

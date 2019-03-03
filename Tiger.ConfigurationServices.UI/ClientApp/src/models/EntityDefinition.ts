@@ -25,7 +25,9 @@ export const ConfigColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-center',
         className: 'text-center small',
-        width: 100
+        width: 100,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Config Name',
@@ -33,7 +35,9 @@ export const ConfigColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-left',
         className: 'text-left small',
-        width: 200
+        width: 200,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Description',
@@ -41,7 +45,9 @@ export const ConfigColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-left',
         className: 'text-left small',
-        minWidth: 300
+        minWidth: 300,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Curo Server',
@@ -49,7 +55,9 @@ export const ConfigColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-center',
         className: 'text-center small',
-        width: 200
+        width: 200,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Applog Server',
@@ -57,7 +65,9 @@ export const ConfigColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-center',
         className: 'text-center small',
-        width: 200
+        width: 200,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     }
 ];
 
@@ -69,20 +79,26 @@ export const ConfigSettingColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-center',
         className: 'text-center small',
-        width: 200
+        width: 200,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Config Setting Name',
         accessor: 'configSettingName',
         headerClassName: 'bold-text bg-light text-left',
         className: 'small',
-        width: 300
+        width: 300,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Description',
         accessor: 'description',
         headerClassName: 'bold-text bg-light text-left',
-        className: 'small'
+        className: 'small',
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     }
 ];
 
@@ -94,21 +110,27 @@ export const ServersColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-center',
         className: 'text-center small',
-        width: 200
+        width: 200,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Servers Name',
         accessor: 'serverName',
         headerClassName: 'bold-text bg-light text-left',
         className: 'small',
-        width: 300
+        width: 300,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Servers Type',
         accessor: 'serverType',
         headerClassName: 'bold-text bg-light text-center',
         className: 'text-center small',
-        maxWidth: 150
+        maxWidth: 150,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         id: 'Active',
@@ -119,7 +141,9 @@ export const ServersColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-center ',
         className: 'text-center small',
-        maxWidth: 150
+        maxWidth: 150,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     }
 ];
 
@@ -272,28 +296,36 @@ export const ConfigEditColumns = [
         accessor: 'configEditKey',
         show: false,
         headerClassName: 'bold-text bg-light text-left',
-        className: 'text-center small'
+        className: 'text-center small',
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Config Key',
         accessor: 'configKey',
         show: false,
         headerClassName: 'bold-text bg-light text-left',
-        className: 'text-center small'
+        className: 'text-center small',
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Curo Server',
         accessor: 'curoDbServerKey',
         show: false,
         headerClassName: 'bold-text bg-light text-left',
-        className: 'text-center small'
+        className: 'text-center small',
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Applog Server',
         accessor: 'applogDbServerKey',
         show: false,
         headerClassName: 'bold-text bg-light text-left',
-        className: 'text-center small'
+        className: 'text-center small',
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
 
     {
@@ -305,7 +337,9 @@ export const ConfigEditColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-center ',
         className: 'text-center small',
-        maxWidth: 150
+        maxWidth: 150,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     }
 ];
 
@@ -327,7 +361,9 @@ export const ConfigSettingEditColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-center ',
         className: 'text-center small',
-        maxWidth: actionWidth
+        maxWidth: actionWidth,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'TLR',
@@ -335,14 +371,18 @@ export const ConfigSettingEditColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-center',
         className: 'text-center small',
-        maxWidth: tlrWidth
+        maxWidth: tlrWidth,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Teller Name',
         accessor: 'tellerName',
         show: true,
         headerClassName: 'bold-text bg-light text-left',
-        className: 'text-left small'
+        className: 'text-left small',
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
 
     {
@@ -351,7 +391,9 @@ export const ConfigSettingEditColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-left',
         className: 'text-left small',
-        minWidth: 200
+        minWidth: 200,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Description',
@@ -359,7 +401,9 @@ export const ConfigSettingEditColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-left',
         className: 'text-left small',
-        minWidth: 350
+        minWidth: 350,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     }
 ];
 
@@ -373,7 +417,9 @@ export const ConfigValueEditColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-left',
         className: 'text-center small',
-        maxWidth: dateEnteredWidth
+        maxWidth: dateEnteredWidth,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Action Type',
@@ -381,7 +427,9 @@ export const ConfigValueEditColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-center ',
         className: 'text-center small',
-        width: actionWidth
+        width: actionWidth,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'TLR',
@@ -389,7 +437,9 @@ export const ConfigValueEditColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-center',
         className: 'text-center small',
-        maxWidth: tlrWidth
+        maxWidth: tlrWidth,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
     {
         Header: 'Teller Name',
@@ -397,7 +447,9 @@ export const ConfigValueEditColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-left',
         className: 'text-left small',
-        width: 200
+        width: 200,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     },
 
     {
@@ -406,6 +458,8 @@ export const ConfigValueEditColumns = [
         show: true,
         headerClassName: 'bold-text bg-light text-left',
         className: 'text-left small',
-        width: 200
+        width: 200,
+        filterable: true,
+        filterMethod: (filter: any, row: any) => filterCaseInsensitive(filter, row, '')
     }
 ];

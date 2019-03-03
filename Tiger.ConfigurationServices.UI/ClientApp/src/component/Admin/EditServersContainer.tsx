@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ServersColumns } from '../../models/EntityDefinition';
 import { Loading } from '../Common/Loading';
 import ReactTable from 'react-table';
+import { Action } from '../../models/Enum';
 
 interface IState {
     editServersResult: IServers[];
@@ -25,35 +26,33 @@ export class EditServersContainer extends React.Component<{}, IState> {
     }
 
     public render(): JSX.Element {
-        // Edit & Delete buttons
+        // Edit, Delete, Save, and Cancel buttons
         const ActionColumn = [
             {
                 headerClassName: 'bold-text bg-light text-center',
                 className: 'text-center small',
                 filterable: false,
                 width: 100,
-                Cell: (
-                    <div>
-                        <button id="Edit" name="btnEdit" className="btn btn-link btn-sm" title="Edit Config Setting" onClick={this.handleOnClick}>
-                            <FontAwesomeIcon icon="pen" className="small" style={{ color: '#DAA520' }} />
-                        </button>
-                        <button
-                            id="Delete"
-                            name="btnDelete"
-                            className="btn btn-link btn-sm"
-                            title="Delete Config Setting"
-                            onClick={this.handleOnClick}
-                        >
-                            <FontAwesomeIcon icon="trash" className="small" style={{ color: '#FF0000' }} />
-                        </button>
-                    </div>
-                )
+                Cell: this.renderCell
             }
         ];
 
-        // add Edit & Delete buttons to the ConfigSettingColumns column definition
-        // ConfigColumns definition is in EntityDefinition.ts
+        // add Edit, Delete, Save and Cancel buttons to the first column of the datagrid
+        // the buttons definition is defined inside the renderCell method
         const _columns = [...ActionColumn, ...ServersColumns];
+
+        // Sequence of actions:
+        //
+        // 1.   When the users click on the Edit / Delete buttons on the datagrid,
+        //      The button onclick action will trigger the handleOnClick method first.
+        // 2.   The handleOnClick will determine which button is clicked & set the action type
+        // 3.   Then callback getTdProps = {this.selectRow} is invoked immediately after that.
+        //      This is where we set the state for the selected serversKey and clear the actionType
+        // 4.   Then callback getTrProps={this.highlightSelectedRow} is invoked next
+        //      This is where we find the selected row index and highlight the row
+        // 5.   Lastly, the columns={_columns} is rendered
+        //      This is where the renderCell method is invoked
+        //      We compare the row serversKey to the selectedServerKey and display the correct icons
 
         return (
             <>
@@ -65,7 +64,7 @@ export class EditServersContainer extends React.Component<{}, IState> {
                     </div>
                     <div className="col text-center">{this.renderLoading()}</div>
                     <div className="col-2 text-right">
-                        <h4 className="mt-2">Edit Config</h4>
+                        <h4 className="mt-2">Edit Server</h4>
                     </div>
                 </div>
                 <div className="row">
@@ -79,9 +78,9 @@ export class EditServersContainer extends React.Component<{}, IState> {
                             style={{ height: '700px', width: '900px' }}
                             data={this.state.editServersResult}
                             noDataText="No Record Found"
-                            columns={_columns}
-                            getTrProps={this.highlightSelectedRow}
                             getTdProps={this.selectRow}
+                            getTrProps={this.highlightSelectedRow}
+                            columns={_columns}
                         />
                     </div>
                 </div>
@@ -116,14 +115,16 @@ export class EditServersContainer extends React.Component<{}, IState> {
     };
 
     private handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        // this method is triggered by the Edit/Delete/Save/Cancel buttons
         e.preventDefault();
         const action = e.currentTarget.id;
+        console.log('1. You clicked this button: ', e.currentTarget.name);
+        console.log('2. The action type is: ', action);
         this.setState({ actionType: action });
     };
 
-    // capture the config setting key for the selected row
+    // must have rowInfo in order for getTdProps to work
     private selectRow = (rowInfo: any, column: any) => {
-        // must have rowInfo in order for getTdProps to work
         return {
             style: {
                 display: 'flex',
@@ -131,11 +132,9 @@ export class EditServersContainer extends React.Component<{}, IState> {
                 justifyContent: 'center'
             },
             onClick: () => {
-                // the button onclick action will trigger the handleOnClick method first
-                // when the users click on the Edit / Delete buttons on the datagrid
-                // then getTdProps is invoked immediately after that.  This is where
-                // we set the state for the selectedConfigKey and clear the actionType
+                // the Edit/Delete/Save/Cancle onclick action will trigger the handleOnClick method first
                 if (column && column.row.serversKey) {
+                    console.log('3. You select key: ', column.row.serversKey);
                     this.setState({ selectedKey: column.row.serversKey });
                 }
                 // --- DO NOT DELETE ---
@@ -187,5 +186,40 @@ export class EditServersContainer extends React.Component<{}, IState> {
             },
             title: `${toolTip}`
         };
+    };
+
+    private renderCell = (rowInfo: any) => {
+        // When the users click on the Edit / Delete buttons on the datagrid,
+        // the button onclick action will trigger the handleOnClick method first.
+        // The handleOnClick will determine which button is clicked & set the action type
+        // Then getTdProps (selectRow) is invoked immediately after that.  This is where
+        // we set the state for the selected serversKey and clear the actionType
+        // Then getTrProps (highlightRow) follows and set the color of the selected row
+        // Lastly, the renderCell method will determine which icons to display based on the action type
+
+        if (this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.serversKey) {
+            console.log('render cell: ', rowInfo.row.serversKey);
+            return (
+                <div>
+                    <button id="Save" name="btnSave" className="btn btn-link btn-sm" title="Save Server" onClick={this.handleOnClick}>
+                        <FontAwesomeIcon icon="save" className="small" style={{ color: '#000099' }} />
+                    </button>
+                    <button id="Cancel" name="btnCancel" className="btn btn-link btn-sm" title="Cancel" onClick={this.handleOnClick}>
+                        <FontAwesomeIcon icon="times-circle" className="small" style={{ color: '#FF0000' }} />
+                    </button>
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <button id="Edit" name="btnEdit" className="btn btn-link btn-sm" title="Edit Server" onClick={this.handleOnClick}>
+                        <FontAwesomeIcon icon="pen" className="small" style={{ color: '#DAA520' }} />
+                    </button>
+                    <button id="Delete" name="btnDelete" className="btn btn-link btn-sm" title="Delete Server" onClick={this.handleOnClick}>
+                        <FontAwesomeIcon icon="trash" className="small" style={{ color: '#FF0000' }} />
+                    </button>
+                </div>
+            );
+        }
     };
 } //class
