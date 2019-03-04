@@ -21,9 +21,9 @@ export class HistoryResult extends React.Component<IProps, IState> {
                     <div className="col">
                         <ReactTable
                             className=" -striped -highlight"
-                            defaultPageSize={-1}
-                            showPagination={false}
-                            showPageJump={false}
+                            defaultPageSize={25}
+                            showPagination={true}
+                            showPageJump={true}
                             filterable={true}
                             noDataText="No Record Found"
                             style={{ height: '700px' }}

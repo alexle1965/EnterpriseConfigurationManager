@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loading } from '../Common/Loading';
 import { AdminClient } from './AdminClient';
 import { ConfigSettingColumns } from '../../models/EntityDefinition';
+import { Action } from '../../models/Enum';
 
 interface IState {
     editSettingResult: IConfigSetting[];
@@ -34,29 +35,27 @@ export class EditSettingContainer extends React.Component<{}, IState> {
                 className: 'text-center small',
                 width: 100,
                 filterable: false,
-                Cell: (
-                    <div>
-                        <button id="Edit" name="btnEdit" className="btn btn-link btn-sm" title="Edit Config Setting" onClick={this.handleOnClick}>
-                            <FontAwesomeIcon icon="pen" className="small" style={{ color: '#DAA520' }} />
-                        </button>
-                        <button
-                            id="Delete"
-                            name="btnDelete"
-                            className="btn btn-link btn-sm"
-                            title="Delete Config Setting"
-                            onClick={this.handleOnClick}
-                        >
-                            <FontAwesomeIcon icon="trash" className="small" style={{ color: '#FF0000' }} />
-                        </button>
-                    </div>
-                )
+                Cell: this.renderCell
             }
         ];
 
-        // add Edit & Delete buttons to the ConfigSettingColumns column definition
+        // add Edit, Delete, Save and Cancel buttons to the first column of the datagrid
+        // the buttons definition is defined inside the renderCell method
         // ConfigSettingColumns definition is in EntityDefinition.ts
         const _columns = [...ActionColumn, ...ConfigSettingColumns];
 
+        // Sequence of actions:
+        //
+        // 1.   When the users click on the Edit / Delete buttons on the datagrid,
+        //      The button onclick action will trigger the handleOnClick method first.
+        // 2.   The handleOnClick will determine which button is clicked & set the action type
+        // 3.   Then callback getTdProps = {this.selectRow} is invoked immediately after that.
+        //      This is where we set the state for the selected configSettingKey and clear the actionType
+        // 4.   Then callback getTrProps={this.highlightSelectedRow} is invoked next
+        //      This is where we find the selected row index and highlight the row
+        // 5.   Lastly, the columns={_columns} is rendered
+        //      This is where the renderCell method is invoked
+        //      We compare the row configSettingKey to the selectedServerKey and display the correct icons
         return (
             <>
                 <div className="row">
@@ -96,7 +95,7 @@ export class EditSettingContainer extends React.Component<{}, IState> {
                     </div>
                 </div>
                 <div>
-                    <h6>
+                    <h6 className="text-danger">
                         Debug Action: {this.state.actionType} - You selected configKey: {this.state.selectedConfigSettingKey}
                     </h6>
                 </div>
@@ -117,12 +116,19 @@ export class EditSettingContainer extends React.Component<{}, IState> {
     };
 
     private handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        // this method is triggered by the Edit/Delete/Save/Cancel buttons
         e.preventDefault();
         const action = e.currentTarget.id;
         this.setState({ actionType: action });
     };
 
-    // capture the config setting key for the selected row
+    // These callbacks are executed with each render of the element with four parameters:
+    // 1. Table State
+    // 2. RowInfo (undefined if not applicable)
+    // 3. Column (undefined if not applicable)
+    // 4. React Table Instance
+    // getTrProps={(state, rowInfo, column, instance)
+    // must have rowInfo in other to access the values of the column
     private selectRow = (rowInfo: any, column: any) => {
         // must have rowInfo in order for getTdProps to work
         return {
@@ -132,10 +138,7 @@ export class EditSettingContainer extends React.Component<{}, IState> {
                 justifyContent: 'center'
             },
             onClick: () => {
-                // the button onclick action will trigger the handleOnClick method first
-                // when the users click on the Edit / Delete buttons on the datagrid
-                // then getTdProps is invoked immediately after that.  This is where
-                // we set the state for the selectedConfigKey and clear the actionType
+                // the Edit/Delete/Save/Cancle onclick action will trigger the handleOnClick method first
                 if (column && column.row.configSettingKey) {
                     this.setState({ selectedConfigSettingKey: column.row.configSettingKey });
                 }
@@ -188,5 +191,50 @@ export class EditSettingContainer extends React.Component<{}, IState> {
             },
             title: `${toolTip}`
         };
+    };
+
+    private renderCell = (rowInfo: any) => {
+        // When the users click on the Edit / Delete buttons on the datagrid,
+        // the button onclick action will trigger the handleOnClick method first.
+        // The handleOnClick will determine which button is clicked & set the action type
+        // Then getTdProps (selectRow) is invoked immediately after that.  This is where
+        // we set the state for the selected configSettingKey and clear the actionType
+        // Then getTrProps (highlightRow) follows and set the color of the selected row
+        // Lastly, the renderCell method will determine which icons to display based on the action type
+
+        // buttons: Save & Edit
+        const btnSaveEditId =
+            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'Save' : 'Edit';
+        const btnSaveEditName =
+            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'btnSave' : 'btnEdit';
+        const btnSaveEditIcon =
+            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'save' : 'pen';
+        const btnSaveEditColor =
+            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? '#000099' : '#DAA520';
+
+        // buttons: Cancel & Delete
+        const btnCancelDeleteId =
+            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'Cancel' : 'Delete';
+        const btnCancelDeleteName =
+            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'btnCancel' : 'btnDelete';
+        const btnCancelDeleteIcon =
+            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'times-circle' : 'trash';
+
+        return (
+            <div>
+                <button id={btnSaveEditId} name={btnSaveEditName} className="btn btn-link btn-sm" title={btnSaveEditId} onClick={this.handleOnClick}>
+                    <FontAwesomeIcon icon={btnSaveEditIcon} className="small" style={{ color: btnSaveEditColor }} />
+                </button>
+                <button
+                    id={btnCancelDeleteId}
+                    name={btnCancelDeleteName}
+                    className="btn btn-link btn-sm"
+                    title={btnCancelDeleteId}
+                    onClick={this.handleOnClick}
+                >
+                    <FontAwesomeIcon icon={btnCancelDeleteIcon} className="small" style={{ color: '#FF0000' }} />
+                </button>
+            </div>
+        );
     };
 } // class

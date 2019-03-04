@@ -94,7 +94,7 @@ export class EditServersContainer extends React.Component<{}, IState> {
                     </div>
                 </div>
                 <div>
-                    <h6>
+                    <h6 className="text-danger">
                         Debug Action: {this.state.actionType} - You selected servers key: {this.state.selectedKey}
                     </h6>
                 </div>
@@ -123,7 +123,13 @@ export class EditServersContainer extends React.Component<{}, IState> {
         this.setState({ actionType: action });
     };
 
-    // must have rowInfo in order for getTdProps to work
+    // These callbacks are executed with each render of the element with four parameters:
+    // 1. Table State
+    // 2. RowInfo (undefined if not applicable)
+    // 3. Column (undefined if not applicable)
+    // 4. React Table Instance
+    // getTrProps={(state, rowInfo, column, instance)
+    // must have rowInfo in other to access the values of the column
     private selectRow = (rowInfo: any, column: any) => {
         return {
             style: {
@@ -197,29 +203,34 @@ export class EditServersContainer extends React.Component<{}, IState> {
         // Then getTrProps (highlightRow) follows and set the color of the selected row
         // Lastly, the renderCell method will determine which icons to display based on the action type
 
-        if (this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.serversKey) {
-            console.log('render cell: ', rowInfo.row.serversKey);
-            return (
-                <div>
-                    <button id="Save" name="btnSave" className="btn btn-link btn-sm" title="Save Server" onClick={this.handleOnClick}>
-                        <FontAwesomeIcon icon="save" className="small" style={{ color: '#000099' }} />
-                    </button>
-                    <button id="Cancel" name="btnCancel" className="btn btn-link btn-sm" title="Cancel" onClick={this.handleOnClick}>
-                        <FontAwesomeIcon icon="times-circle" className="small" style={{ color: '#FF0000' }} />
-                    </button>
-                </div>
-            );
-        } else {
-            return (
-                <div>
-                    <button id="Edit" name="btnEdit" className="btn btn-link btn-sm" title="Edit Server" onClick={this.handleOnClick}>
-                        <FontAwesomeIcon icon="pen" className="small" style={{ color: '#DAA520' }} />
-                    </button>
-                    <button id="Delete" name="btnDelete" className="btn btn-link btn-sm" title="Delete Server" onClick={this.handleOnClick}>
-                        <FontAwesomeIcon icon="trash" className="small" style={{ color: '#FF0000' }} />
-                    </button>
-                </div>
-            );
-        }
+        // buttons: Save & Edit
+        const btnSaveEditId = this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.serversKey ? 'Save' : 'Edit';
+        const btnSaveEditName = this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.serversKey ? 'btnSave' : 'btnEdit';
+        const btnSaveEditIcon = this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.serversKey ? 'save' : 'pen';
+        const btnSaveEditColor = this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.serversKey ? '#000099' : '#DAA520';
+
+        // buttons: Cancel & Delete
+        const btnCancelDeleteId = this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.serversKey ? 'Cancel' : 'Delete';
+        const btnCancelDeleteName =
+            this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.serversKey ? 'btnCancel' : 'btnDelete';
+        const btnCancelDeleteIcon =
+            this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.serversKey ? 'times-circle' : 'trash';
+
+        return (
+            <div>
+                <button id={btnSaveEditId} name={btnSaveEditName} className="btn btn-link btn-sm" title={btnSaveEditId} onClick={this.handleOnClick}>
+                    <FontAwesomeIcon icon={btnSaveEditIcon} className="small" style={{ color: btnSaveEditColor }} />
+                </button>
+                <button
+                    id={btnCancelDeleteId}
+                    name={btnCancelDeleteName}
+                    className="btn btn-link btn-sm"
+                    title={btnCancelDeleteId}
+                    onClick={this.handleOnClick}
+                >
+                    <FontAwesomeIcon icon={btnCancelDeleteIcon} className="small" style={{ color: '#FF0000' }} />
+                </button>
+            </div>
+        );
     };
 } //class
