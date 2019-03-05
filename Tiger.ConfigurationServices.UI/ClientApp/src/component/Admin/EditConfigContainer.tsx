@@ -210,6 +210,7 @@ export class EditConfigContainer extends React.Component<{}, IState> {
         const btnSaveEditIcon = this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? 'save' : 'pen';
         const btnSaveEditColor =
             this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? '#000099' : '#DAA520';
+       
 
         // buttons: Cancel & Delete
         const btnCancelDeleteId =
@@ -218,6 +219,8 @@ export class EditConfigContainer extends React.Component<{}, IState> {
             this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? 'btnCancel' : 'btnDelete';
         const btnCancelDeleteIcon =
             this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? 'times-circle' : 'trash';
+        const btnCancelDeleteColor =
+            this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? '#FF0000' : '#696969';
 
         return (
             <div>
@@ -231,7 +234,7 @@ export class EditConfigContainer extends React.Component<{}, IState> {
                     title={btnCancelDeleteId}
                     onClick={this.handleOnClick}
                 >
-                    <FontAwesomeIcon icon={btnCancelDeleteIcon} className="small" style={{ color: '#FF0000' }} />
+                    <FontAwesomeIcon icon={btnCancelDeleteIcon} className="small" style={{ color: btnCancelDeleteColor }} />
                 </button>
             </div>
         );

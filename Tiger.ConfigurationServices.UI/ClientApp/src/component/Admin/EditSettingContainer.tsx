@@ -220,6 +220,9 @@ export class EditSettingContainer extends React.Component<{}, IState> {
         const btnCancelDeleteIcon =
             this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'times-circle' : 'trash';
 
+        const btnCancelDeleteColor =
+            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? '#FF0000' : '#696969';
+
         return (
             <div>
                 <button id={btnSaveEditId} name={btnSaveEditName} className="btn btn-link btn-sm" title={btnSaveEditId} onClick={this.handleOnClick}>
@@ -232,7 +235,7 @@ export class EditSettingContainer extends React.Component<{}, IState> {
                     title={btnCancelDeleteId}
                     onClick={this.handleOnClick}
                 >
-                    <FontAwesomeIcon icon={btnCancelDeleteIcon} className="small" style={{ color: '#FF0000' }} />
+                    <FontAwesomeIcon icon={btnCancelDeleteIcon} className="small" style={{ color: btnCancelDeleteColor}} />
                 </button>
             </div>
         );
