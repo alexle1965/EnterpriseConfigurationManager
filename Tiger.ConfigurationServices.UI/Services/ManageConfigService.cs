@@ -39,12 +39,12 @@ namespace Tiger.ConfigurationServices.UI.Services
         {
             var allConfigs = await GetAllConfigAsync();
 
-            // sort alphabetical order
-            IList<KeyValuePair<int, string>> kvConfigList = allConfigs
+            // technique #1 - sort alphabetical order
+            IList<KeyValuePair<int, string>> kvConfigNames = allConfigs
                 .Select(x => new KeyValuePair<int, string>(x.ConfigKey, x.ConfigName))
                 .OrderBy(o => o.Value).ToList();
 
-            return kvConfigList;
+            return kvConfigNames;
         }
 
         /// <summary>

@@ -60,7 +60,7 @@ export class HistoryResult extends React.Component<IProps, IState> {
         // column.original 	- original column values for the selected row
         // column.row		- column values for the selected row
 
-        if (column.row.isProduction === 'Y') {
+        if (column != undefined && column.row.isProduction === 'Y') {
             column.row.isProduction = <FontAwesomeIcon icon="check" className="text-danger" />;
         }
         return {};

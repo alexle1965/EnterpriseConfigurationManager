@@ -8,16 +8,16 @@ import { ConfigSettingColumns } from '../../models/EntityDefinition';
 import { Action } from '../../models/Enum';
 
 interface IState {
-    editSettingResult: IConfigSetting[];
-    selectedConfigSettingKey: number;
+    editResult: IConfigSetting[];
+    selectedKey: number;
     actionType: string;
 }
 const adminClient = new AdminClient();
 
 export class EditSettingContainer extends React.Component<{}, IState> {
     public state = {
-        editSettingResult: [],
-        selectedConfigSettingKey: 0,
+        editResult: [],
+        selectedKey: 0,
         actionType: ''
     };
 
@@ -26,7 +26,7 @@ export class EditSettingContainer extends React.Component<{}, IState> {
     }
 
     public render(): JSX.Element {
-        const { editSettingResult: settingResult } = this.state;
+        const { editResult: settingResult } = this.state;
 
         // Edit & Delete buttons
         const ActionColumn = [
@@ -96,7 +96,7 @@ export class EditSettingContainer extends React.Component<{}, IState> {
                 </div>
                 <div>
                     <h6 className="text-danger">
-                        Debug Action: {this.state.actionType} - You selected configKey: {this.state.selectedConfigSettingKey}
+                        Debug Action: {this.state.actionType} - You selected configKey: {this.state.selectedKey}
                     </h6>
                 </div>
             </>
@@ -104,14 +104,14 @@ export class EditSettingContainer extends React.Component<{}, IState> {
     } // render
 
     private async load() {
-        const allSettings = await adminClient.getSettings();
-        this.setState({ editSettingResult: allSettings });
+        const results = await adminClient.getSettings();
+        this.setState({ editResult: results });
     }
 
     private renderLoading = () => {
         let isLoading: boolean = false;
 
-        isLoading = this.state.editSettingResult && this.state.editSettingResult.length === 0;
+        isLoading = this.state.editResult && this.state.editResult.length === 0;
         return isLoading && <Loading />;
     };
 
@@ -140,7 +140,7 @@ export class EditSettingContainer extends React.Component<{}, IState> {
             onClick: () => {
                 // the Edit/Delete/Save/Cancle onclick action will trigger the handleOnClick method first
                 if (column && column.row.configSettingKey) {
-                    this.setState({ selectedConfigSettingKey: column.row.configSettingKey });
+                    this.setState({ selectedKey: column.row.configSettingKey });
                 }
                 // --- DO NOT DELETE ---
                 // IMPORTANT! React-Table uses onClick internally to trigger
@@ -170,7 +170,7 @@ export class EditSettingContainer extends React.Component<{}, IState> {
     // getTdProps={(state, rowInfo, column, instance)
     // must have rowInfo in other to access the values of the column
     private highlightSelectedRow = (rowInfo: any, column: any) => {
-        const modifiedKey = this.state.selectedConfigSettingKey;
+        const modifiedKey = this.state.selectedKey;
         const toolTip = `Config Setting Key: ${column.original.configSettingKey}`;
 
         // Look up the index for the modified rows.  If found, highlight the row
@@ -203,25 +203,23 @@ export class EditSettingContainer extends React.Component<{}, IState> {
         // Lastly, the renderCell method will determine which icons to display based on the action type
 
         // buttons: Save & Edit
-        const btnSaveEditId =
-            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'Save' : 'Edit';
+        const btnSaveEditId = this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configSettingKey ? 'Save' : 'Edit';
         const btnSaveEditName =
-            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'btnSave' : 'btnEdit';
-        const btnSaveEditIcon =
-            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'save' : 'pen';
+            this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configSettingKey ? 'btnSave' : 'btnEdit';
+        const btnSaveEditIcon = this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configSettingKey ? 'save' : 'pen';
         const btnSaveEditColor =
-            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? '#000099' : '#DAA520';
+            this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configSettingKey ? '#000099' : '#DAA520';
 
         // buttons: Cancel & Delete
         const btnCancelDeleteId =
-            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'Cancel' : 'Delete';
+            this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configSettingKey ? 'Cancel' : 'Delete';
         const btnCancelDeleteName =
-            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'btnCancel' : 'btnDelete';
+            this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configSettingKey ? 'btnCancel' : 'btnDelete';
         const btnCancelDeleteIcon =
-            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? 'times-circle' : 'trash';
+            this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configSettingKey ? 'times-circle' : 'trash';
 
         const btnCancelDeleteColor =
-            this.state.actionType === Action.Edit && this.state.selectedConfigSettingKey === rowInfo.row.configSettingKey ? '#FF0000' : '#696969';
+            this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configSettingKey ? '#FF0000' : '#696969';
 
         return (
             <div>
@@ -235,7 +233,7 @@ export class EditSettingContainer extends React.Component<{}, IState> {
                     title={btnCancelDeleteId}
                     onClick={this.handleOnClick}
                 >
-                    <FontAwesomeIcon icon={btnCancelDeleteIcon} className="small" style={{ color: btnCancelDeleteColor}} />
+                    <FontAwesomeIcon icon={btnCancelDeleteIcon} className="small" style={{ color: btnCancelDeleteColor }} />
                 </button>
             </div>
         );

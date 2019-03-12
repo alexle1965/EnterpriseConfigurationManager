@@ -44,5 +44,45 @@ namespace Tiger.ConfigurationServices.UI.Services
 
             return allSettings.OrderBy(cs => cs.ConfigSettingName).ToList();
         }
+
+        //
+        // Add New Server
+        //
+        public async Task<Servers> InsertServerAsync(Servers server)
+        {
+            dbContext.Add(server);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return server;
+        }
+
+        //
+        // Add New Config
+        //
+        public async Task<Config> InsertConfigAsync(Config config)
+        {
+            dbContext.Add(config);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return config;
+        }
+
+        //
+        // Add New Config Setting
+        //
+        public async Task<ConfigSetting> InsertConfigSettingAsync(ConfigSetting configSetting)
+        {
+            dbContext.Add(configSetting);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return configSetting;
+        }
+
+        //
+        // Add New Config Setting
+        //
+        public async Task<ConfigValue> InsertConfigValueAsync(ConfigValue configValue)
+        {
+            dbContext.Add(configValue);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return configValue;
+        }
     } //class
 } //namespace

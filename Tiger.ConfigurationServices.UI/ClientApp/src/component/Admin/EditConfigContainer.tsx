@@ -8,16 +8,16 @@ import { ConfigColumns } from '../../models/EntityDefinition';
 import { Action } from '../../models/Enum';
 
 interface IState {
-    editConfigResult: IConfig[];
-    selectedConfigKey: number;
+    editResult: IConfig[];
+    selectedKey: number;
     actionType: string;
 }
 const adminClient = new AdminClient();
 
 export class EditConfigContainer extends React.Component<{}, IState> {
     public state = {
-        editConfigResult: [],
-        selectedConfigKey: 0,
+        editResult: [],
+        selectedKey: 0,
         actionType: ''
     };
 
@@ -76,7 +76,7 @@ export class EditConfigContainer extends React.Component<{}, IState> {
                             showPageJump={true}
                             filterable
                             style={{ height: '700px' }}
-                            data={this.state.editConfigResult}
+                            data={this.state.editResult}
                             noDataText="No Record Found"
                             getTdProps={this.selectRow}
                             getTrProps={this.highlightSelectedRow}
@@ -87,15 +87,15 @@ export class EditConfigContainer extends React.Component<{}, IState> {
                 <div className="row">
                     <div className="col">
                         <div className="">
-                            {this.state.editConfigResult && (
-                                <label className="text-left small bold-text">Record count: {this.state.editConfigResult.length}</label>
+                            {this.state.editResult && (
+                                <label className="text-left small bold-text">Record count: {this.state.editResult.length}</label>
                             )}
                         </div>
                     </div>
                 </div>
                 <div>
                     <h6 className="text-danger">
-                        Debug Action: {this.state.actionType} - You selected configKey: {this.state.selectedConfigKey}
+                        Debug Action: {this.state.actionType} - You selected configKey: {this.state.selectedKey}
                     </h6>
                 </div>
             </>
@@ -103,14 +103,14 @@ export class EditConfigContainer extends React.Component<{}, IState> {
     } // render
 
     private async load() {
-        const allConfigs = await adminClient.getConfigs();
-        this.setState({ editConfigResult: allConfigs });
+        const results = await adminClient.getConfigs();
+        this.setState({ editResult: results });
     }
 
     private renderLoading = () => {
         let isLoading: boolean = false;
 
-        isLoading = this.state.editConfigResult && this.state.editConfigResult.length === 0;
+        isLoading = this.state.editResult && this.state.editResult.length === 0;
         return isLoading && <Loading />;
     };
 
@@ -141,7 +141,7 @@ export class EditConfigContainer extends React.Component<{}, IState> {
             onClick: () => {
                 // the Edit/Delete/Save/Cancle onclick action will trigger the handleOnClick method first
                 if (column && column.row.configKey) {
-                    this.setState({ selectedConfigKey: column.row.configKey });
+                    this.setState({ selectedKey: column.row.configKey });
                 }
                 // --- DO NOT DELETE ---
                 // IMPORTANT! React-Table uses onClick internally to trigger
@@ -171,7 +171,7 @@ export class EditConfigContainer extends React.Component<{}, IState> {
     // getTdProps={(state, rowInfo, column, instance)
     // must have rowInfo in other to access the values of the column
     private highlightSelectedRow = (rowInfo: any, column: any) => {
-        const modifiedKey = this.state.selectedConfigKey;
+        const modifiedKey = this.state.selectedKey;
         const toolTip = `Config Key: ${column.original.configKey}`;
 
         // Look up the index for the modified rows.  If found, highlight the row
@@ -204,23 +204,19 @@ export class EditConfigContainer extends React.Component<{}, IState> {
         // Lastly, the renderCell method will determine which icons to display based on the action type
 
         // buttons: Save & Edit
-        const btnSaveEditId = this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? 'Save' : 'Edit';
-        const btnSaveEditName =
-            this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? 'btnSave' : 'btnEdit';
-        const btnSaveEditIcon = this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? 'save' : 'pen';
-        const btnSaveEditColor =
-            this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? '#000099' : '#DAA520';
-       
+        const btnSaveEditId = this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configKey ? 'Save' : 'Edit';
+        const btnSaveEditName = this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configKey ? 'btnSave' : 'btnEdit';
+        const btnSaveEditIcon = this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configKey ? 'save' : 'pen';
+        const btnSaveEditColor = this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configKey ? '#000099' : '#DAA520';
 
         // buttons: Cancel & Delete
-        const btnCancelDeleteId =
-            this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? 'Cancel' : 'Delete';
+        const btnCancelDeleteId = this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configKey ? 'Cancel' : 'Delete';
         const btnCancelDeleteName =
-            this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? 'btnCancel' : 'btnDelete';
+            this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configKey ? 'btnCancel' : 'btnDelete';
         const btnCancelDeleteIcon =
-            this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? 'times-circle' : 'trash';
+            this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configKey ? 'times-circle' : 'trash';
         const btnCancelDeleteColor =
-            this.state.actionType === Action.Edit && this.state.selectedConfigKey === rowInfo.row.configKey ? '#FF0000' : '#696969';
+            this.state.actionType === Action.Edit && this.state.selectedKey === rowInfo.row.configKey ? '#FF0000' : '#696969';
 
         return (
             <div>

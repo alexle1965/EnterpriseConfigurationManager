@@ -8,7 +8,7 @@ import ReactTable from 'react-table';
 import { Action } from '../../models/Enum';
 
 interface IState {
-    editServersResult: IServers[];
+    editResult: IServers[];
     selectedKey: number;
     actionType: string;
 }
@@ -16,7 +16,7 @@ const adminClient = new AdminClient();
 
 export class EditServersContainer extends React.Component<{}, IState> {
     public state = {
-        editServersResult: [],
+        editResult: [],
         selectedKey: 0,
         actionType: ''
     };
@@ -76,7 +76,7 @@ export class EditServersContainer extends React.Component<{}, IState> {
                             showPageJump={true}
                             filterable
                             style={{ height: '700px', width: '900px' }}
-                            data={this.state.editServersResult}
+                            data={this.state.editResult}
                             noDataText="No Record Found"
                             getTdProps={this.selectRow}
                             getTrProps={this.highlightSelectedRow}
@@ -87,8 +87,8 @@ export class EditServersContainer extends React.Component<{}, IState> {
                 <div className="row">
                     <div className="col">
                         <div className="">
-                            {this.state.editServersResult && (
-                                <label className="text-left small bold-text">Record count: {this.state.editServersResult.length}</label>
+                            {this.state.editResult && (
+                                <label className="text-left small bold-text">Record count: {this.state.editResult.length}</label>
                             )}
                         </div>
                     </div>
@@ -104,13 +104,13 @@ export class EditServersContainer extends React.Component<{}, IState> {
 
     private async load() {
         const results = await adminClient.getServers();
-        this.setState({ editServersResult: results });
+        this.setState({ editResult: results });
     }
 
     private renderLoading = () => {
         let isLoading: boolean = false;
 
-        isLoading = this.state.editServersResult && this.state.editServersResult.length === 0;
+        isLoading = this.state.editResult && this.state.editResult.length === 0;
         return isLoading && <Loading />;
     };
 
