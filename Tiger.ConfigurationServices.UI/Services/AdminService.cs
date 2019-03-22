@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Tiger.ConfigurationServices.UI.Models;
 
 namespace Tiger.ConfigurationServices.UI.Services
 {
+    // http://www.entityframeworktutorial.net/querying-entity-graph-in-entity-framework.aspx
+
     public class AdminService
     {
         private MaintContext dbContext = new MaintContext();

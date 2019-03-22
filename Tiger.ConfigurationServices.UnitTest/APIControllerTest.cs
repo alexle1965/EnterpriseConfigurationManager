@@ -1,6 +1,8 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Tiger.ConfigurationServices.UI.Models;
 using Tiger.ConfigurationServices.UI.Services;
 
 namespace Tiger.ConfigurationServices.UnitTest
@@ -93,6 +95,21 @@ namespace Tiger.ConfigurationServices.UnitTest
             foreach (var item in results)
             {
                 Console.WriteLine($"{item.ConfigSettingKey} [{item.ConfigSettingName} - {item.Description}] ");
+            }
+        }
+
+        [TestMethod]
+        public async Task GetConfigValuesAsync_EFSyntax_Test()
+        {
+            // EF Core syntax linq-to-entities
+            using (var context = new MaintContext())
+            {
+                // Eager loading is the process whereby a query for one type of entity also loads related entities
+                // as part of the query, so that we don't need to execute a separate query for related entities.
+                // Eager loading is achieved using the Include() method.
+                var results = await context.Config
+                    .Include(s => s.ConfigValue)
+                    .SingleOrDefaultAsync(id => id.ConfigKey == 114);
             }
         }
     }
